@@ -1,0 +1,155 @@
+.report-wrapper {
+  padding: 1rem;
+  background: white;
+  color: #333;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ccc;
+
+  .print-btn {
+    background: var(--color-primary, #0056b3);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.chapter-section {
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+}
+
+.chapter-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  border-bottom: 2px solid #000;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rule-section {
+  margin-bottom: 1rem;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dense-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+}
+
+.dense-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #eee;
+  padding: 0.25rem;
+  page-break-inside: avoid;
+}
+
+.svg-icon-small {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  ::ng-deep svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.svg-icon-large {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  ::ng-deep svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 1cm;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .report-wrapper {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .print-content {
+    column-count: 2;
+    column-gap: 2rem;
+  }
+
+  /* Make text readable */
+  body {
+    font-size: 11pt;
+    line-height: 1.3;
+  }
+
+  .chapter-title {
+    font-size: 16pt;
+    page-break-after: avoid;
+    break-after: avoid;
+    margin-top: 1rem;
+  }
+
+  .section-title {
+    font-size: 14pt;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .dense-grid {
+    grid-template-columns: repeat(8, 1fr); /* Force tight columns for print */
+  }
+
+  .list-item {
+    padding-bottom: 0.25rem;
+  }
+  
+  .chapter-section {
+    page-break-before: auto; /* Don't force page break on every chapter to save space */
+  }
+}

@@ -1,0 +1,114 @@
+<div class="card relative w-full flex flex-col md:flex-row items-center md:items-start gap-6 !mb-6"
+     [ngClass]="alertColorClass()"
+     [class.cursor-pointer]="hideInformation()"
+     [class.!border-green-500]="isMemorized()"
+     [class.opacity-70]="isMemorized()"
+     (mouseenter)="isRevealed.set(true)"
+     (mouseleave)="isRevealed.set(false)"
+     (click)="isRevealed.set(!isRevealed())">
+
+  <!-- Memorization Toggle Button -->
+  <button 
+    class="absolute top-4 left-4 z-20 text-2xl transition-all duration-300 hover:scale-110 active:scale-95"
+    [class.text-green-500]="isMemorized()"
+    [class.text-muted]="!isMemorized()"
+    [class.hover:text-green-400]="!isMemorized()"
+    (click)="toggleMemorized($event)"
+    [title]="isMemorized() ? 'تم الحفظ' : 'تحديد كتم الحفظ'">
+    <i [class]="isMemorized() ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'"></i>
+  </button>
+      
+  <!-- Image/Icon Container (Right side on Desktop) -->
+  <div class="shrink-0 flex items-center justify-center md:order-last">
+    @if (data().icon && !data().imageOrSvg) {
+      <div class="text-5xl md:text-6xl p-4" [ngClass]="iconClass()">
+        <i class="fa-solid" [ngClass]="data().icon"></i>
+      </div>
+    }
+
+    @if (data().imageOrSvg) {
+      <div class="relative h-32 w-32 md:h-40 md:w-40 drop-shadow-md flex items-center justify-center bg-white rounded-xl p-3 border border-color">
+        @if (isSvg()) {
+          <div [innerHTML]="safeSvgUrl()" class="w-full h-full flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"></div>
+        } @else {
+          <img [src]="data().imageOrSvg!" [alt]="data().title || 'Rule image'" class="w-full h-full object-contain" />
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Text Content (Left side on Desktop) -->
+  <div class="flex-1 w-full relative">
+    <div class="flex justify-between items-start gap-4 mb-3">
+      @if (data().title) {
+        <h4 class="font-black text-2xl text-heading leading-tight">
+          {{ data().title }}
+        </h4>
+      }
+      
+      @if (data().metaData?.badge || data().alertType === 'danger') {
+         <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-wider shadow-md shrink-0 text-white"
+               [ngClass]="data().alertType === 'danger' ? 'bg-danger' : 'bg-accent'">
+           @if (data().alertType === 'danger') {
+             <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
+           }
+           {{ data().metaData?.badge || (data().alertType === 'danger' ? 'هام جداً' : '') }}
+         </span>
+      }
+    </div>
+
+    <div class="content-wrapper transition-all duration-300 ease-in-out"
+         [ngClass]="{'blur-lg select-none opacity-20': hideInformation() && !isRevealed()}">
+      
+      @if (data().description) {
+        <p class="font-bold text-base md:text-lg leading-relaxed">
+          {{ data().description }}
+        </p>
+      }
+
+      @if (data().list) {
+        <ul class="list-disc list-inside space-y-3 mt-4 text-muted border-r-2 border-color pr-4">
+          @for (listItem of data().list; track $index) {
+            <li class="font-bold text-base md:text-lg leading-relaxed text-base">
+               {{ listItem }}
+            </li>
+          }
+        </ul>
+      }
+
+      @if (data().speedLimits) {
+        <div class="overflow-hidden rounded-xl mt-6 border-2 border-color shadow-sm max-w-2xl">
+          <table class="w-full text-center border-collapse">
+            <thead>
+              <tr class="bg-primary text-white">
+                <th class="p-3 border-b border-white/10 font-black">المكان</th>
+                <th class="p-3 border-b border-white/10 font-black">السرعة القصوى</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (limit of data().speedLimits; track limit.location) {
+                <tr class="border-b border-color hover:bg-slate-500/5 bg-card transition-colors">
+                  <td class="p-3 font-bold text-heading text-lg border-l border-color">{{ limit.location }}</td>
+                  <td class="p-3 font-black text-accent text-2xl">{{ limit.normalSpeed }} <small class="text-xs font-bold text-muted">كلم/س</small></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+    @if (hideInformation() && !isRevealed()) {
+      <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-10">
+         <div class="glass-panel px-8 py-4 rounded-2xl border-2 border-primary shadow-2xl transform -rotate-2">
+            <span class="text-2xl text-primary font-black drop-shadow-sm flex items-center gap-3">
+              <i class="fa-solid fa-lock"></i>
+              ما هي القاعدة؟
+            </span>
+         </div>
+      </div>
+    }
+  </div>
+</div>
+
+

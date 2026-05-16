@@ -1,0 +1,11 @@
+@use "../../../styles/variables" as vars;
+
+:host {
+  display: block;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

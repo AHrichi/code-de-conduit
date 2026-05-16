@@ -1,0 +1,52 @@
+@use "../../../styles/variables" as vars;
+
+.rule-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: white;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  h4 {
+    letter-spacing: -0.01em;
+  }
+
+  ul {
+    padding-right: 1.5rem;
+    li {
+      &::marker {
+        color: vars.$color-accent;
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  // Ensure speed table is responsive but looks good on wide screens
+  table {
+    @media (min-width: 768px) {
+       min-width: 400px;
+    }
+  }
+}
+
+.content-wrapper {
+  will-change: filter, opacity;
+  transition: all 0.4s ease-in-out;
+}
+
+@media print {
+  .rule-card {
+    break-inside: avoid;
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+    background: white !important;
+    padding: 1rem !important;
+  }
+  
+  .badge {
+    border: 1px solid #000;
+    color: #000 !important;
+    background: transparent !important;
+  }
+}

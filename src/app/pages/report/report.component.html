@@ -1,0 +1,107 @@
+<div class="report-wrapper" dir="rtl">
+  <!-- Header with Print Button (hidden in print) -->
+  <div class="no-print header-actions">
+    <div>
+      <h1 class="text-4xl font-black text-primary">التقرير الشامل (نسخة للطباعة)</h1>
+      <p class="text-slate-600 font-bold text-lg">تقرير مبسط مصمم خصيصاً لتوفير الحبر والورق</p>
+    </div>
+    <button class="print-btn" (click)="printReport()">
+      <i class="fa-solid fa-print"></i> طباعة التقرير
+    </button>
+  </div>
+
+  <div class="print-content">
+    @for (chapter of chapters(); track chapter.id) {
+      <div class="chapter-section">
+        <h2 class="chapter-title"><i class="fa-solid" [class]="chapter.icon"></i> {{ chapter.title }}</h2>
+
+        @for (section of chapter.sections; track section.id) {
+          <div class="rule-section">
+            <h3 class="section-title"><i class="fa-solid" [class]="section.icon"></i> {{ section.title }}</h3>
+
+            @if (section.type === 'signs-grid') {
+              <div class="dense-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="dense-item text-center">
+                    @if (item.imageOrSvg) {
+                      @if (isSvg(item.imageOrSvg)) {
+                        <div class="svg-icon-small" [innerHTML]="sanitizeHtml(item.imageOrSvg)"></div>
+                      } @else {
+                        <img [src]="item.imageOrSvg" class="w-16 h-16 object-contain mx-auto" [alt]="item.signLabel || item.title || 'sign'" />
+                      }
+                    }
+                    <div class="text-sm font-bold mt-1 leading-tight">{{ item.signLabel || item.title }}</div>
+                  </div>
+                }
+              </div>
+            } @else if (section.type === 'priority-scenario') {
+              <div class="dense-grid-priority mt-2">
+                @for (item of section.items; track item.id) {
+                  <div class="priority-item flex gap-2 border border-slate-200 p-2 break-inside-avoid">
+                    @if (item.imageOrSvg) {
+                       <img [src]="item.imageOrSvg" class="w-32 h-32 object-contain shrink-0" [alt]="item.title || 'scenario'" />
+                    }
+                    <div class="priority-text flex-1">
+                      <strong class="text-base text-primary block mb-1">الترتيب: {{ item.priorityScenario?.solutionOrder?.join(' ثم ') }}</strong>
+                      <p class="text-sm text-slate-700 m-0 leading-snug">{{ item.priorityScenario?.solutionExplanation }}</p>
+                    </div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <!-- General list for speed tables, rules, documents, and general items -->
+              <div class="dense-list mt-2">
+                @for (item of section.items; track item.id) {
+                  <div class="list-item flex gap-3 border-b border-slate-100 pb-2 mb-2 break-inside-avoid">
+                    @if (item.imageOrSvg || item.icon) {
+                      <div class="shrink-0 flex items-center justify-center w-8 h-8 bg-slate-50 rounded">
+                        @if (item.imageOrSvg) {
+                          @if (isSvg(item.imageOrSvg)) {
+                            <div class="svg-icon-large" [innerHTML]="sanitizeHtml(item.imageOrSvg)"></div>
+                          } @else {
+                            <img [src]="item.imageOrSvg" class="w-6 h-6 object-contain" [alt]="item.title || 'image'" />
+                          }
+                        } @else if (item.icon) {
+                          <i class="fa-solid text-base text-slate-400" [class]="item.icon"></i>
+                        }
+                      </div>
+                    }
+                    <div class="item-content flex-1">
+                      @if (item.title) { <strong class="text-lg block">{{ item.title }}</strong> }
+                      @if (item.description) { <p class="text-base text-slate-600 m-0 leading-snug">{{ item.description }}</p> }
+                      
+                      @if (item.list) {
+                        <ul class="text-base list-disc pl-4 pr-4 m-0 mt-1 text-slate-700">
+                          @for (li of item.list; track $index) { <li>{{ li }}</li> }
+                        </ul>
+                      }
+
+                      @if (item.speedLimits) {
+                        <table class="dense-table mt-2 w-full text-sm text-right border-collapse">
+                          <thead>
+                            <tr class="bg-slate-100">
+                              <th class="border border-slate-200 p-1">المكان</th>
+                              <th class="border border-slate-200 p-1">السرعة القصوى</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @for (limit of item.speedLimits; track limit.location) {
+                              <tr>
+                                <td class="border border-slate-200 p-1 font-bold">{{ limit.location }}</td>
+                                <td class="border border-slate-200 p-1 text-primary">{{ limit.normalSpeed }} كلم/س</td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

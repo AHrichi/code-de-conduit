@@ -1,0 +1,130 @@
+@use "../../../../../styles/variables" as vars;
+
+// ─── Shared Chapter Styles ───
+// These base styles are reused across all chapter components.
+
+:host {
+  display: block;
+}
+
+.chapter-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+// ─── Chapter Title ───
+.chapter-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 900;
+  font-size: 1.75rem;
+  color: vars.$color-primary;
+  border-bottom: 4px solid vars.$color-accent;
+  padding-bottom: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.chapter-title-icon {
+  color: vars.$color-text-muted;
+  font-size: 1.5rem;
+}
+
+// ─── Section Block ───
+.section-block {
+  margin-bottom: 2.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: vars.$color-primary;
+  border-bottom: 1px solid vars.$color-border;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+
+  &.section-heading--accent {
+    color: vars.$color-accent;
+    border-bottom-color: #bae6fd;
+  }
+
+  &.section-heading--warning {
+    color: vars.$color-warning;
+    border-bottom-color: vars.$color-warning-border;
+  }
+
+  &.section-heading--danger {
+    color: vars.$color-danger;
+    border-bottom-color: vars.$color-danger-border;
+  }
+
+  &.section-heading--dark {
+    color: #334155;
+    border-bottom-color: vars.$color-border;
+  }
+
+  &.section-heading--success {
+    color: vars.$color-success;
+    border-bottom-color: vars.$color-success-border;
+  }
+}
+
+// ─── Card Layouts ───
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Document Badges ───
+.documents-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+.document-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: vars.$color-bg-white;
+  border: 1px solid vars.$color-success-border;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: vars.$color-text-base;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: filter 0.3s ease, opacity 0.3s ease;
+
+  &.document-badge--hidden {
+    filter: blur(8px);
+    opacity: 0.5;
+  }
+}
+
+.document-badge-icon {
+  color: vars.$color-success;
+  font-size: 0.875rem;
+}
+
+// ─── Print ───
+@media print {
+  .chapter-page {
+    max-width: 100%;
+  }
+}

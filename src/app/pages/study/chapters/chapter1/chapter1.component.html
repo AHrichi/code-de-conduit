@@ -1,0 +1,75 @@
+<section class="chapter-page">
+  <h2 class="chapter-title">
+    <i class="fa-solid fa-id-card chapter-title-icon"></i>
+    {{ chapter.title }}
+  </h2>
+
+  <!-- أ. أصناف الرخص والعربات -->
+  <div class="section-block">
+    <h3 class="section-heading">
+      <i class="fa-solid fa-car"></i>
+      أ. أصناف الرخص والعربات
+    </h3>
+    <div class="card-stack">
+      @for (item of chapter.sections[0].items; track item.id) {
+        <app-rule-card [data]="item" [hideInformation]="hideInfo()"></app-rule-card>
+      }
+    </div>
+  </div>
+
+  <!-- ب. الشروط الطبية والصلوحية -->
+  <div class="section-block">
+    <h3 class="section-heading section-heading--accent">
+      <i class="fa-solid fa-file-medical"></i>
+      ب. الشروط الطبية والصلوحية
+    </h3>
+    <div class="card-stack">
+      @for (item of chapter.sections[1].items; track item.id) {
+        <app-rule-card [data]="item" [hideInformation]="hideInfo()"></app-rule-card>
+      }
+    </div>
+  </div>
+
+  <!-- ج. قواعد جر المجرورة -->
+  <div class="section-block">
+    <h3 class="section-heading section-heading--warning">
+      <i class="fa-solid fa-trailer"></i>
+      ج. قواعد جر المجرورة (Remorque)
+    </h3>
+    <div class="card-stack">
+      @for (item of chapter.sections[2].items; track item.id) {
+        <app-rule-card [data]="item" [hideInformation]="hideInfo()"></app-rule-card>
+      }
+    </div>
+  </div>
+
+  <!-- د. الفحص الفني الدوري -->
+  <div class="section-block">
+    <h3 class="section-heading section-heading--dark">
+      <i class="fa-solid fa-calendar-check"></i>
+      د. الفحص الفني الدوري
+    </h3>
+    <div class="card-stack">
+      @for (item of chapter.sections[3].items; track item.id) {
+        <app-rule-card [data]="item" [hideInformation]="hideInfo()"></app-rule-card>
+      }
+    </div>
+  </div>
+
+  <!-- هـ. الوثائق الإجبارية للعربة -->
+  <div class="section-block">
+    <h3 class="section-heading section-heading--success">
+      <i class="fa-solid fa-folder-open"></i>
+      هـ. الوثائق الإجبارية للعربة (5 أوراق)
+    </h3>
+    <div class="documents-grid">
+      @for (item of chapter.sections[4].items; track item.id) {
+        <app-document-badge 
+          [title]="item.title || ''" 
+          [icon]="item.icon" 
+          [hideInformation]="hideInfo()">
+        </app-document-badge>
+      }
+    </div>
+  </div>
+</section>

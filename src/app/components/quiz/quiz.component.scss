@@ -1,0 +1,53 @@
+.quiz-container {
+  // Custom Animations for a premium feel
+  .animate-in {
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+  }
+
+  .zoom-in {
+    animation-name: zoomIn;
+  }
+
+  .slide-in-from-bottom-4 {
+    animation-name: slideInBottom;
+  }
+
+  .slide-in-from-right-4 {
+    animation-name: slideInRight;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slideInBottom {
+    from { transform: translateY(1rem); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(1rem); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  // Smooth progress bar transition
+  .bg-primary {
+    transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+}
+
+// Option button specific styles
+button:disabled {
+  cursor: default;
+}

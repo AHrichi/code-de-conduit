@@ -1,0 +1,119 @@
+<section class="chapter-page">
+  <h2 class="chapter-title">
+    <i class="fa-solid fa-gauge-high chapter-title-icon"></i>
+    {{ chapter.title }}
+  </h2>
+
+  <!-- أ. فترة التربص -->
+  <div class="section-block">
+    <h3 class="section-heading section-heading--warning">
+      <i class="fa-solid fa-user-graduate"></i>
+      أ. فترة التربص
+    </h3>
+
+    <div class="trainee-badge-row relative cursor-pointer group p-6 rounded-xl border-2 transition-all duration-300"
+         [class.border-green-500]="isMemorized('80 Trainee Sign')"
+         [class.bg-green-50]="isMemorized('80 Trainee Sign')"
+         (mouseenter)="isTraineeRevealed.set(true)"
+         (mouseleave)="isTraineeRevealed.set(false)"
+         (click)="isTraineeRevealed.set(!isTraineeRevealed())">
+      
+      <!-- Memorization Toggle -->
+      <button 
+        class="absolute top-2 left-2 z-20 text-xl transition-all duration-300 hover:scale-110"
+        [ngClass]="isMemorized('80 Trainee Sign') ? 'text-green-600' : 'text-slate-300 hover:text-green-400'"
+        (click)="toggleMemorized($event, '80 Trainee Sign')">
+        <i [class]="isMemorized('80 Trainee Sign') ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'"></i>
+      </button>
+
+      <div class="flex items-center gap-4 transition-all duration-300"
+           [class.blur-md]="hideInfo() && !isTraineeRevealed()">
+        <div class="trainee-badge">80</div>
+        <p class="trainee-text">توضع العلامة (80) بالجهة اليسرى في الخلف</p>
+      </div>
+      
+      @if (hideInfo() && !isTraineeRevealed()) {
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <i class="fa-solid fa-lock text-primary/30 text-xl"></i>
+        </div>
+      }
+    </div>
+
+    <div class="card-stack mt-6">
+      @for (item of chapter.sections[0].items; track item.id) {
+        <app-rule-card [data]="item" [hideInformation]="hideInfo()"></app-rule-card>
+      }
+    </div>
+  </div>
+
+  <!-- ب. السرعة القانونية القصوى -->
+  <div class="section-block">
+    <h3 class="section-heading">
+      <i class="fa-solid fa-gauge"></i>
+      ب. السرعة القانونية القصوى
+    </h3>
+
+    <div class="speed-table-wrapper relative cursor-pointer p-6 rounded-xl border-2 transition-all duration-300" 
+         [class.border-green-500]="isMemorized('Speed Limits Table')"
+         [class.bg-green-50]="isMemorized('Speed Limits Table')"
+         (mouseenter)="isTableRevealed.set(true)"
+         (mouseleave)="isTableRevealed.set(false)"
+         (click)="isTableRevealed.set(!isTableRevealed())">
+      
+      <!-- Memorization Toggle -->
+      <button 
+        class="absolute top-2 left-2 z-20 text-xl transition-all duration-300 hover:scale-110"
+        [ngClass]="isMemorized('Speed Limits Table') ? 'text-green-600' : 'text-slate-300 hover:text-green-400'"
+        (click)="toggleMemorized($event, 'Speed Limits Table')">
+        <i [class]="isMemorized('Speed Limits Table') ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'"></i>
+      </button>
+      
+      <div class="transition-all duration-300"
+           [class.blur-md]="hideInfo() && !isTableRevealed()">
+        <table class="speed-table" role="table">
+          <thead>
+            <tr>
+              <th>المكان / العربة</th>
+              <th>طقس عادي</th>
+              <th class="col-rain">مطر / ضباب</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (limit of chapter.sections[1].items[0].speedLimits; track limit.location) {
+              <tr>
+                <td class="cell-location">{{ limit.location }}</td>
+                <td class="cell-speed">{{ limit.normalSpeed }}</td>
+                <td class="cell-speed cell-rain">
+                  @if (limit.rainSpeed) {
+                    {{ limit.rainSpeed }}
+                  } @else {
+                    —
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (hideInfo() && !isTableRevealed()) {
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <span class="bg-primary text-white px-4 py-2 rounded-full font-black text-sm shadow-lg">انقر لمشاهدة السرعات</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- ج. ظروف السياقة والموانع -->
+  <div class="section-block">
+    <h3 class="section-heading section-heading--danger">
+      <i class="fa-solid fa-cloud-showers-heavy"></i>
+      ج. ظروف السياقة والموانع
+    </h3>
+    <div class="card-stack">
+      @for (item of chapter.sections[2].items; track item.id) {
+        <app-rule-card [data]="item" [hideInformation]="hideInfo()"></app-rule-card>
+      }
+    </div>
+  </div>
+</section>

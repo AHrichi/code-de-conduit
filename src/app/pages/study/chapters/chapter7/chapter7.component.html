@@ -1,0 +1,43 @@
+<section class="chapter-container">
+  <header class="chapter-header">
+    <h2 class="text-3xl font-heading font-black text-primary mb-6 flex items-center gap-3">
+      <i class="fa-solid" [class]="chapter.icon"></i>
+      {{ chapter.title }}
+    </h2>
+    <p class="text-lg font-bold text-slate-700 mb-8 bg-blue-50 p-6 border-r-4 border-primary rounded-lg shadow-sm">
+      <i class="fa-solid fa-circle-info ml-2 text-primary"></i>
+      قواعد المقاطعة والمجاوزة هي أساس السلامة المرورية لتجنب الاصطدامات وجهاً لوجه أو الجانبية.
+    </p>
+  </header>
+
+  <div class="sections-wrapper">
+    @for (section of chapter.sections; track section.id) {
+      <div class="section-block mb-12">
+        <h3 class="text-2xl font-heading font-black text-slate-800 mb-6 border-b-2 border-slate-200 pb-3 flex items-center gap-3">
+          @if (section.icon) {
+            <i class="fa-solid" [class]="section.icon"></i>
+          }
+          {{ section.title }}
+        </h3>
+
+        <div class="rules-list">
+          @for (item of section.items; track item.id) {
+            @if (item.imageOrSvg && item.signCategory) {
+              <div class="mb-6 max-w-sm">
+                <app-sign-card 
+                  [data]="item" 
+                  [hideInformation]="store.studyState.hideInformation()">
+                </app-sign-card>
+              </div>
+            } @else {
+              <app-rule-card 
+                [data]="item" 
+                [hideInformation]="store.studyState.hideInformation()">
+              </app-rule-card>
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

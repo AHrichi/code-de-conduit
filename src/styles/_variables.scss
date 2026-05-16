@@ -1,0 +1,107 @@
+// Design Tokens and Color Palette
+
+:root {
+  // Common Colors
+  --color-primary: #0f172a;
+  --color-secondary: #1e293b;
+  --color-accent: #0284c7;
+  
+  // Light Mode Variables
+  --bg-base: #f1f5f9;
+  --bg-white: #ffffff;
+  --bg-card: #ffffff;
+  --bg-navbar: rgba(255, 255, 255, 0.8);
+  
+  --text-base: #334155;
+  --text-heading: #0f172a;
+  --text-muted: #64748b;
+  
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  // Semantic Colors
+  --color-danger: #b91c1c;
+  --color-danger-light: #fef2f2;
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-success: #15803d;
+  --color-success-light: #f0fdf4;
+  --color-info: #0369a1;
+  --color-info-light: #f0f9ff;
+
+  // Glassmorphism
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-blur: 12px;
+}
+
+.dark {
+  // Dark Mode Overrides
+  --bg-base: #020617;
+  --bg-white: #0f172a;
+  --bg-card: #1e293b;
+  --bg-navbar: rgba(15, 23, 42, 0.8);
+  
+  --text-base: #cbd5e1;
+  --text-heading: #f8fafc;
+  --text-muted: #94a3b8;
+  
+  --border-color: #334155;
+  --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  
+  // Vibrant Dark Semantic Colors
+  --color-primary: #38bdf8;
+  --color-accent: #0ea5e9;
+  --color-danger: #ef4444;
+  --color-danger-light: rgba(239, 68, 68, 0.1);
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.1);
+  --color-success: #22c55e;
+  --color-success-light: rgba(34, 197, 94, 0.1);
+  --color-info: #0ea5e9;
+  --color-info-light: rgba(14, 165, 233, 0.1);
+
+  // Dark Glassmorphism
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+}
+
+// SCSS variables for compatibility with existing code
+$color-primary: var(--color-primary);
+$color-secondary: var(--color-secondary);
+$color-accent: var(--color-accent);
+
+$color-bg-base: var(--bg-base);
+$color-bg-white: var(--bg-white);
+$color-bg-card: var(--bg-card);
+
+$color-danger: var(--color-danger);
+$color-danger-light: var(--color-danger-light);
+$color-danger-border: var(--border-color);
+
+$color-warning: var(--color-warning);
+$color-warning-light: var(--color-warning-light);
+$color-warning-border: var(--border-color);
+
+$color-success: var(--color-success);
+$color-success-light: var(--color-success-light);
+$color-success-border: var(--border-color);
+
+$color-info: var(--color-info);
+$color-info-light: var(--color-info-light);
+$color-info-border: var(--border-color);
+
+$color-text-base: var(--text-base);
+$color-text-muted: var(--text-muted);
+$color-border: var(--border-color);
+
+// Typography
+$font-family-sans: 'Cairo', sans-serif;
+$font-family-heading: 'Tajawal', sans-serif;
+
+// Layout
+$print-margin: 1.2cm;

@@ -1,0 +1,55 @@
+<nav class="no-print sticky top-0 z-50 glass-panel border-b">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    
+    <!-- Logo & Brand -->
+    <div class="flex items-center gap-3 cursor-pointer group" routerLink="/dashboard">
+      <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-500">
+        <i class="fa-solid fa-car-side text-white text-lg"></i>
+      </div>
+      <span class="text-xl font-black tracking-tight text-heading">
+        رخصة السياقة <span class="text-primary">تونس</span>
+      </span>
+    </div>
+    
+    <!-- Navigation Links -->
+    <div class="hidden md:flex items-center gap-2">
+      <a routerLink="/dashboard" routerLinkActive="!text-primary !bg-primary/5"
+         class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all duration-300 hover:bg-slate-500/10 text-muted hover:text-heading">
+        <i class="fa-solid fa-house-chimney"></i> الرئيسية
+      </a>
+      
+      <a routerLink="/study" routerLinkActive="!text-primary !bg-primary/5"
+         class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all duration-300 hover:bg-slate-500/10 text-muted hover:text-heading">
+        <i class="fa-solid fa-book-open"></i> موسوعة الدراسة
+      </a>
+
+      <a routerLink="/quiz" routerLinkActive="!text-primary !bg-primary/5"
+         class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all duration-300 hover:bg-slate-500/10 text-muted hover:text-heading">
+        <i class="fa-solid fa-graduation-cap"></i> اختبار تجريبي
+      </a>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-4">
+      <!-- Theme Toggle -->
+      <button (click)="store.toggleTheme()"
+              class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 hover:rotate-45 bg-slate-500/10 text-muted hover:bg-slate-500/20 hover:text-heading"
+              [attr.aria-label]="store.theme() === 'dark' ? 'الوضع الفاتح' : 'الوضع الداكن'">
+        @if (store.theme() === 'dark') {
+          <i class="fa-solid fa-sun text-yellow-400"></i>
+        } @else {
+          <i class="fa-solid fa-moon"></i>
+        }
+      </button>
+
+      <!-- Language / Profile (Mock) -->
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-500/10 border border-slate-500/20">
+        <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white font-black">TN</div>
+        <span class="text-xs font-black text-muted">العربية</span>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

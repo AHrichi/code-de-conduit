@@ -1,0 +1,32 @@
+<div class="quiz-container max-w-4xl mx-auto p-8" dir="rtl">
+  @if (!isFinished()) {
+    <div class="test-view">
+      <h2 class="text-2xl font-black mb-4">السؤال {{ currentIndex() + 1 }}</h2>
+      <p class="mb-6">{{ currentQuestion().question }}</p>
+      <div class="options flex flex-col gap-4">
+        @for (option of currentQuestion().options; track option.id) {
+          <button (click)="selectOption(option)" 
+                  class="p-4 border rounded-xl transition-all"
+                  [ngClass]="getOptionClass(option)">
+            {{ option.text }}
+          </button>
+        }
+      </div>
+      @if (showExplanation()) {
+        <div class="mt-6 p-4 bg-slate-100 rounded-xl">
+          <p>{{ currentQuestion().explanation }}</p>
+          <button (click)="nextQuestion()" class="mt-4 px-6 py-2 bg-primary text-white rounded-lg">التالي</button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="result-view text-center">
+      <h2 class="text-4xl font-black mb-4">انتهى الاختبار</h2>
+      <p class="text-2xl">النتيجة: {{ score() }} / {{ questions().length }}</p>
+      <div class="mt-8 flex gap-4 justify-center">
+        <button (click)="resetQuiz()" class="px-6 py-2 bg-slate-900 text-white rounded-lg">إعادة</button>
+        <button routerLink="/dashboard" class="px-6 py-2 border rounded-lg">الرئيسية</button>
+      </div>
+    </div>
+  }
+</div>

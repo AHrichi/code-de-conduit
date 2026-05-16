@@ -1,0 +1,161 @@
+<div class="no-print bg-white shadow-lg sticky top-0 z-50 p-4 flex justify-between items-center border-b-2 border-slate-200">
+  <div class="flex items-center gap-3">
+    <i class="fa-solid fa-clipboard-check text-3xl text-warning"></i>
+    <div>
+      <h1 class="text-xl font-heading font-bold text-primary">اختبار التقييم الذاتي</h1>
+      <p class="text-sm text-slate-500">اختبر معلوماتك في قانون الطرقات</p>
+    </div>
+  </div>
+  
+  @if (store.testState.activeTest()) {
+    <div class="bg-warning text-white px-4 py-2 rounded-full font-bold shadow-md animate-pulse flex items-center gap-2">
+      <i class="fa-solid fa-stopwatch"></i> الاختبار قيد الإنجاز
+    </div>
+  }
+</div>
+
+<main class="max-w-3xl mx-auto my-8 p-6 print:m-0 print:p-0">
+  
+  @if (!store.testState.activeTest() && !hasSubmitted()) {
+    <div class="bg-white p-10 rounded-xl shadow-xl text-center border-t-8 border-warning no-print">
+      <i class="fa-solid fa-graduation-cap text-6xl text-slate-300 mb-6"></i>
+      <h2 class="text-3xl font-heading font-black text-primary mb-4">هل أنت مستعد للاختبار؟</h2>
+      <p class="text-slate-600 mb-8 font-bold leading-relaxed max-w-lg mx-auto">
+        هذا الاختبار يتضمن {{ questions.length }} أسئلة من الفصول المتنوعة للقواعد العامة. 
+        يجب الإجابة على جميع الأسئلة لمعرفة النتيجة.
+      </p>
+      <button (click)="startTest()" class="bg-warning hover:bg-orange-600 text-white font-black text-xl py-4 px-10 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-3 mx-auto">
+        <i class="fa-solid fa-play"></i> انطلاق الاختبار
+      </button>
+    </div>
+
+    @if (store.pastScores().length > 0) {
+      <div class="bg-white rounded-xl shadow-md border border-slate-200 mt-8 overflow-hidden no-print">
+        <div class="bg-slate-100 p-4 border-b border-slate-200 flex items-center gap-3">
+          <i class="fa-solid fa-chart-line text-accent text-xl"></i>
+          <h3 class="font-heading font-black text-primary text-lg">سجل النتائج السابقة</h3>
+        </div>
+        <div class="divide-y divide-slate-100 max-h-64 overflow-y-auto">
+          @for (entry of store.pastScores(); track entry.date; let i = $index) {
+            <div class="flex items-center justify-between p-4 hover:bg-slate-50 transition">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm"
+                     [ngClass]="entry.score >= (entry.total * 0.8) ? 'bg-green-100 text-success' : 'bg-red-100 text-danger'">
+                  @if (entry.score >= (entry.total * 0.8)) { <i class="fa-solid fa-check"></i> }
+                  @else { <i class="fa-solid fa-xmark"></i> }
+                </div>
+                <div>
+                  <span class="font-black text-slate-800 text-sm">المحاولة {{ store.pastScores().length - i }}</span>
+                  <span class="block text-xs text-slate-500 font-bold">{{ entry.date | date:'yyyy/MM/dd - HH:mm' }}</span>
+                </div>
+              </div>
+              <div class="font-black text-2xl" [ngClass]="entry.score >= (entry.total * 0.8) ? 'text-success' : 'text-danger'">
+                {{ entry.score }}/{{ entry.total }}
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+
+  @if (store.testState.activeTest() || hasSubmitted()) {
+    
+    @if (hasSubmitted()) {
+      <div class="bg-white p-8 rounded-xl shadow-xl mb-8 text-center border-t-8 no-print"
+           [ngClass]="isPassed ? 'border-success' : 'border-danger'">
+        <h2 class="text-3xl font-heading font-black mb-2" [ngClass]="isPassed ? 'text-success' : 'text-danger'">
+          @if (isPassed) { <i class="fa-solid fa-party-horn"></i> مبروك! نتيجة ممتازة }
+          @else { <i class="fa-solid fa-face-frown-open"></i> حاول مرة أخرى }
+        </h2>
+        <div class="text-5xl font-black mb-4 mt-4" [ngClass]="isPassed ? 'text-success' : 'text-danger'">
+          {{ store.testState.score() }} / {{ questions.length }}
+        </div>
+        <p class="font-bold text-slate-600">يمكنك مراجعة أخطائك في الأسفل.</p>
+        <button (click)="startTest()" class="mt-6 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded shadow transition">
+          إعادة الاختبار
+        </button>
+      </div>
+    }
+
+    <form [formGroup]="testForm" (ngSubmit)="submitTest()" class="space-y-6">
+      
+      @for (q of questions; track q.id; let i = $index) {
+        <div class="card bg-white p-6 rounded-xl border-t-4 shadow-sm"
+             [ngClass]="{
+               'border-slate-300': !hasSubmitted(),
+               'border-success': hasSubmitted() && store.testState.answers()[q.id] === q.correctAnswerIndex,
+               'border-danger': hasSubmitted() && store.testState.answers()[q.id] !== q.correctAnswerIndex
+             }">
+          
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-10 h-10 shrink-0 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-500 border-2 border-slate-200">
+              {{ i + 1 }}
+            </div>
+            <div>
+              <h3 class="text-xl font-black text-primary leading-relaxed mt-1">{{ q.question }}</h3>
+              @if (q.imageOrSvg) {
+                <div class="relative h-32 w-32 mt-4 bg-slate-50 border rounded-lg p-2">
+                  <img [ngSrc]="q.imageOrSvg" alt="Question specific" fill class="object-contain" />
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="space-y-3 mr-14">
+            @for (opt of q.options; track opt; let optIdx = $index) {
+              <label class="flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition"
+                     [ngClass]="{
+                       'border-slate-200 hover:border-accent hover:bg-blue-50': !hasSubmitted() && testForm.get(q.id)?.value !== optIdx,
+                       'border-accent bg-blue-50 ring-2 ring-accent ring-opacity-50': !hasSubmitted() && testForm.get(q.id)?.value === optIdx,
+                       
+                       'border-success bg-green-50': hasSubmitted() && optIdx === q.correctAnswerIndex,
+                       'border-danger bg-red-50 opacity-50': hasSubmitted() && store.testState.answers()[q.id] === optIdx && optIdx !== q.correctAnswerIndex,
+                       'border-slate-100 opacity-50': hasSubmitted() && optIdx !== q.correctAnswerIndex && store.testState.answers()[q.id] !== optIdx
+                     }">
+                
+                <input type="radio" [formControlName]="q.id" [value]="optIdx" 
+                       class="w-5 h-5 text-accent focus:ring-accent accent-accent"
+                       [attr.disabled]="hasSubmitted() ? true : null">
+                
+                <span class="font-bold text-slate-800">{{ opt }}</span>
+                
+                @if (hasSubmitted()) {
+                  <div class="mr-auto">
+                    @if (optIdx === q.correctAnswerIndex) { <i class="fa-solid fa-check-circle text-success text-xl"></i> }
+                    @if (store.testState.answers()[q.id] === optIdx && optIdx !== q.correctAnswerIndex) { <i class="fa-solid fa-times-circle text-danger text-xl"></i> }
+                  </div>
+                }
+              </label>
+            }
+          </div>
+          
+          @if (testForm.get(q.id)?.invalid && testForm.get(q.id)?.touched && !hasSubmitted()) {
+            <p class="text-danger text-sm font-bold mt-3 mr-14"><i class="fa-solid fa-triangle-exclamation"></i> الرجاء اختيار إجابة.</p>
+          }
+
+          @if (hasSubmitted()) {
+            <div class="mr-14 mt-6 p-4 rounded-lg border flex items-start gap-3"
+                 [ngClass]="store.testState.answers()[q.id] === q.correctAnswerIndex ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'">
+              <i class="fa-solid mt-1 text-xl" 
+                 [ngClass]="store.testState.answers()[q.id] === q.correctAnswerIndex ? 'fa-lightbulb text-success' : 'fa-circle-info text-danger'"></i>
+              <div>
+                <p class="font-black mb-1" [ngClass]="store.testState.answers()[q.id] === q.correctAnswerIndex ? 'text-success' : 'text-danger'">التفسير:</p>
+                <p class="font-bold text-slate-700 text-sm leading-relaxed">{{ q.explanation }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (!hasSubmitted()) {
+        <div class="text-center mt-8 pb-10 no-print">
+          <button type="submit" class="bg-primary hover:bg-slate-800 text-white font-black text-xl py-4 px-12 rounded-full shadow-lg transition flex items-center gap-3 mx-auto">
+            <i class="fa-solid fa-check-double"></i> إنهاء الاختبار ومعرفة النتيجة
+          </button>
+        </div>
+      }
+
+    </form>
+  }
+</main>

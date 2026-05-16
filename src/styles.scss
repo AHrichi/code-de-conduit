@@ -1,0 +1,111 @@
+@use 'styles/variables' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+@layer base {
+  html {
+    background-color: var(--bg-base);
+    transition: background-color 0.3s ease;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-base);
+    @apply antialiased font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-heading);
+  }
+}
+
+/* Print Styles */
+@media print {
+  @page { 
+    size: A4 portrait; 
+    margin: $print-margin; 
+  }
+  
+  body { 
+    background: white !important; 
+    color: black !important; 
+    font-size: 11pt; 
+    line-height: 1.4; 
+  }
+  
+  .no-print { 
+    display: none !important; 
+  }
+  
+  /* Prevent cutting elements across pages */
+  .card, table, tr, th, td, li, .avoid-break, svg, img { 
+      page-break-inside: avoid !important; 
+      break-inside: avoid !important; 
+  }
+  h1, h2, h3, h4, h5 { 
+      page-break-after: avoid !important; 
+      break-after: avoid !important; 
+      page-break-inside: avoid !important; 
+  }
+  .page-break { 
+      page-break-before: always !important; 
+      break-before: always !important; 
+  }
+  
+  /* Print colors & borders */
+  .print-border { border: 1px solid $color-border !important; }
+  .print-bg-gray { background-color: $color-bg-card !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+  .print-bg-accent { background-color: $color-info-light !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+  .print-bg-warning { background-color: $color-warning-light !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+  .print-bg-danger { background-color: $color-danger-light !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+  .text-black-print { color: #000 !important; }
+  
+  * { box-shadow: none !important; }
+  
+  table { width: 100% !important; border-collapse: collapse; }
+  th, td { border: 1px solid $color-border !important; padding: 8px !important; }
+  th { background-color: $color-bg-base !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+}
+
+@layer components {
+  .chapter-title {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-accent);
+      @apply border-b-4 pb-2 mb-6 mt-10 flex items-center gap-3 font-black text-3xl;
+  }
+  .card { 
+      background-color: var(--bg-card);
+      border-color: var(--border-color);
+      box-shadow: var(--shadow-sm);
+      @apply p-6 rounded-xl border mb-6 transition-all duration-300; 
+      
+      &:hover {
+        box-shadow: var(--shadow-md);
+      }
+  }
+
+  .glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    @apply transition-all duration-300;
+  }
+}
+
+/* ===========================
+   Dark Mode Refinements
+   =========================== */
+html.dark {
+  // We already handle most variables in _variables.scss
+  // This section is for specific tweaks that can't be easily tokenized
+  
+  .card {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0));
+  }
+}

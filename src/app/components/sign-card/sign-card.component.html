@@ -1,0 +1,63 @@
+<article [id]="data().id" 
+         class="card relative overflow-hidden transition-all duration-300 w-full flex flex-col md:flex-row items-stretch !p-0"
+         [ngClass]="borderColorClass()"
+         [class.cursor-pointer]="hideInformation()"
+         [class.!border-green-500]="isMemorized()"
+         [class.opacity-70]="isMemorized()"
+         (mouseenter)="isRevealed.set(true)"
+         (mouseleave)="isRevealed.set(false)"
+         (click)="isRevealed.set(!isRevealed())">
+
+  <!-- Memorization Toggle Button -->
+  <button 
+    class="absolute top-4 left-4 z-20 text-2xl transition-all duration-300 hover:scale-110 active:scale-95"
+    [class.text-green-500]="isMemorized()"
+    [class.text-muted]="!isMemorized()"
+    [class.hover:text-green-400]="!isMemorized()"
+    (click)="toggleMemorized($event)"
+    [title]="isMemorized() ? 'تم الحفظ' : 'تحديد كتم الحفظ'">
+    <i [class]="isMemorized() ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'"></i>
+  </button>
+
+    
+  <!-- Sign Image Container (Right side on Desktop) -->
+  <div class="flex items-center justify-center border-b md:border-b-0 md:border-r border-color bg-slate-500/5 p-6 h-40 md:h-auto md:w-48 shrink-0 md:order-last">
+    @if (isSvg()) {
+      <div [innerHTML]="safeSvgUrl()" class="h-28 w-auto object-contain"></div>
+    } @else {
+      <img [src]="data().imageOrSvg" [alt]="data().title" class="h-28 w-auto object-contain drop-shadow-md" loading="lazy">
+    }
+  </div>
+
+  <!-- Sign Content Container (Left side on Desktop) -->
+  <div class="p-6 relative flex-1 flex flex-col justify-center">
+    <div class="flex flex-col gap-1 mb-3">
+      @if (getCategoryLabel()) {
+        <p class="text-xs font-black text-muted uppercase tracking-widest">
+          {{ getCategoryLabel() }}
+        </p>
+      }
+      <h3 class="text-xl md:text-2xl font-black leading-tight text-heading">
+        {{ data().title }}
+      </h3>
+    </div>
+
+    <div class="space-y-3 transition-all duration-300 ease-in-out"
+         [ngClass]="{'blur-lg select-none opacity-20': hideInformation() && !isRevealed()}">
+      
+      <p class="text-base md:text-lg leading-relaxed text-muted font-bold">
+        {{ data().description }}
+      </p>
+    </div>
+
+    @if (hideInformation() && !isRevealed()) {
+      <div class="absolute inset-0 flex flex-col justify-center items-center pointer-events-none p-4 text-center glass-panel">
+         <div class="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-2">
+            <i class="fa-solid fa-eye-slash text-xl text-primary"></i>
+         </div>
+         <p class="text-sm font-black text-primary">انقر للمشاهدة</p>
+      </div>
+    }
+  </div>
+</article>
+

@@ -1,0 +1,263 @@
+@use "sass:color";
+@use "../../../styles/variables" as vars;
+
+// ─── Host ───
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+// ─── Toolbar ───
+.study-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: vars.$color-bg-white;
+  border-bottom: 2px solid vars.$color-border;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-brand {
+  font-size: 1.75rem;
+  color: vars.$color-accent;
+}
+
+.toolbar-title {
+  font-size: 1.125rem;
+  font-weight: 900;
+  color: vars.$color-primary;
+  line-height: 1.3;
+}
+
+.toolbar-subtitle {
+  font-size: 0.75rem;
+  color: vars.$color-text-muted;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+// ─── Toolbar Buttons ───
+.btn-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid vars.$color-border;
+  border-radius: 0.5rem;
+  background: vars.$color-bg-card;
+  color: vars.$color-text-base;
+  cursor: pointer;
+  font-size: 1.125rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--border-color);
+  }
+}
+
+.btn-hide {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #e2e8f0;
+  color: #334155;
+
+  &:hover {
+    background: #cbd5e1;
+  }
+
+  &.btn-hide--active {
+    background: vars.$color-danger;
+    color: white;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}
+
+.btn-print {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: vars.$color-accent;
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+// ─── Layout ───
+.study-layout {
+  display: flex;
+  min-height: calc(100vh - 64px);
+  transition: all 0.3s ease;
+}
+
+.study-layout--sidebar-closed {
+  .sidebar {
+    margin-inline-start: -280px;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+// ─── Sidebar ───
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: vars.$color-bg-card;
+  border-inline-end: 1px solid vars.$color-border;
+  padding: 1.25rem 0;
+  overflow-y: auto;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  transition: margin 0.3s ease, opacity 0.3s ease;
+}
+
+.sidebar-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 900;
+  font-size: 1rem;
+  color: vars.$color-primary;
+  padding: 0 1.25rem 1rem;
+  border-bottom: 1px solid vars.$color-border;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.5rem 0.625rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: vars.$color-text-base;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #e2e8f0;
+    color: vars.$color-primary;
+  }
+
+  &.sidebar-link--active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    .sidebar-link-icon {
+      color: white;
+    }
+  }
+}
+
+.sidebar-link-icon {
+  margin-top: 2px;
+  width: 1rem;
+  text-align: center;
+  flex-shrink: 0;
+  color: vars.$color-text-muted;
+  font-size: 0.875rem;
+}
+
+.sidebar-link-text {
+  flex: 1;
+}
+
+// ─── Content Area ───
+.study-content {
+  flex: 1;
+  min-width: 0;
+  padding: 2rem;
+  background: vars.$color-bg-white;
+}
+
+// ─── Responsive ───
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 35;
+    top: 64px;
+    inset-inline-start: 0;
+    height: calc(100vh - 64px);
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .study-layout--sidebar-closed .sidebar {
+    margin-inline-start: -280px;
+  }
+
+  .study-content {
+    padding: 1rem;
+  }
+
+  .btn-print-label {
+    display: none;
+  }
+}
+
+// ─── Print ───
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .study-layout {
+    display: block;
+  }
+
+  .sidebar {
+    display: none !important;
+  }
+
+  .study-content {
+    padding: 0;
+    width: 100%;
+  }
+}

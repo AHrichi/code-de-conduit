@@ -1,0 +1,30 @@
+<section class="chapter-container">
+  <header class="chapter-header">
+    <h2 class="text-3xl font-heading font-black text-primary mb-6 flex items-center gap-3">
+      <i class="fa-solid" [class]="chapter.icon"></i>
+      {{ chapter.title }}
+    </h2>
+  </header>
+
+  <div class="sections-wrapper">
+    @for (section of chapter.sections; track section.id) {
+      <div class="section-card mb-10">
+        <h3 class="text-xl font-heading font-bold text-slate-700 mb-4 border-b border-slate-200 pb-2 flex items-center gap-2">
+          @if (section.icon) {
+            <i class="fa-solid" [class]="section.icon"></i>
+          }
+          {{ section.title }}
+        </h3>
+
+        <div class="items-stack flex flex-col gap-6">
+          @for (item of section.items; track item.id) {
+            <app-rule-card 
+              [data]="item" 
+              [hideInformation]="store.studyState.hideInformation()">
+            </app-rule-card>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

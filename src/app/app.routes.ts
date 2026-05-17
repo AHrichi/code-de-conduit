@@ -17,9 +17,12 @@ export const routes: Routes = [
       { path: 'chapter-9', loadComponent: () => import('./pages/study/chapters/chapter9/chapter9.component').then(m => m.Chapter9Component) },
       { path: 'chapter-10', loadComponent: () => import('./pages/study/chapters/chapter10/chapter10.component').then(m => m.Chapter10Component) },
       { path: 'chapter-11', loadComponent: () => import('./pages/study/chapters/chapter11/chapter11.component').then(m => m.Chapter11Component) },
+      { path: 'mistakes', loadComponent: () => import('./pages/study/mistakes/mistakes.component').then(m => m.MistakesComponent) },
+      { path: 'flashcards', loadComponent: () => import('./pages/study/flashcards/flashcards.component').then(m => m.FlashcardsComponent) }
     ]
   },
   { path: 'test', loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent) },
+  { path: 'test/:id', loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent) },
   { path: 'report', loadComponent: () => import('./pages/report/report.component').then(m => m.ReportComponent) },
   { path: 'dashboard', loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent) },
   { path: 'quiz', loadComponent: () => import('./components/quiz/quiz.component').then(m => m.QuizComponent) },

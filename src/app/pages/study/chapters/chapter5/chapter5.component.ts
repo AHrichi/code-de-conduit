@@ -3,12 +3,13 @@ import { AppStore } from '../../../../store/app.store';
 import { RuleCardComponent } from '../../../../components/rule-card/rule-card.component';
 import { PriorityCardComponent } from '../../../../components/priority-card/priority-card.component';
 import { CHAPTER_5_DATA } from '../../../../data/chapter-5.data';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-chapter5',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RuleCardComponent, PriorityCardComponent],
+  imports: [RuleCardComponent, PriorityCardComponent, RouterLink],
   templateUrl: './chapter5.component.html',
   styleUrl: './chapter5.component.scss'
 })

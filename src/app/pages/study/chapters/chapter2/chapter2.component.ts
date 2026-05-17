@@ -4,12 +4,13 @@ import { RuleCardComponent } from '../../../../components/rule-card/rule-card.co
 import { NgClass } from '@angular/common';
 import { CHAPTER_2_DATA } from '../../../../data/chapter-2.data';
 import { ProgressStore } from '../../../../store/progress.store';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-chapter2',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RuleCardComponent, NgClass],
+  imports: [RuleCardComponent, NgClass, RouterLink],
   templateUrl: './chapter2.component.html',
   styleUrl: './chapter2.component.scss'
 })

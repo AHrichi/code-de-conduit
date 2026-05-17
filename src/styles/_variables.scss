@@ -70,6 +70,29 @@
   --glass-border: rgba(255, 255, 255, 0.05);
 }
 
+html.reading-mode {
+  // Reading Mode Overrides (Warm / Sepia tones)
+  --bg-base: #fbf0d9;
+  --bg-white: #fdf6e3;
+  --bg-card: #fdf6e3;
+  --bg-navbar: rgba(253, 246, 227, 0.9);
+  
+  --text-base: #5c4b37;
+  --text-heading: #3a2e22;
+  --text-muted: #8c7a6b;
+  
+  --border-color: #e6d5b8;
+  --shadow-sm: 0 1px 2px 0 rgba(92, 75, 55, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(92, 75, 55, 0.1), 0 2px 4px -2px rgba(92, 75, 55, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(92, 75, 55, 0.1), 0 4px 6px -4px rgba(92, 75, 55, 0.1);
+  
+  --color-primary: #b58900;
+  --color-accent: #cb4b16;
+
+  --glass-bg: rgba(253, 246, 227, 0.8);
+  --glass-border: rgba(230, 213, 184, 0.5);
+}
+
 // SCSS variables for compatibility with existing code
 $color-primary: var(--color-primary);
 $color-secondary: var(--color-secondary);

@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: { 
@@ -10,12 +11,21 @@ module.exports = {
         heading: ['Cairo', 'sans-serif'] 
       },
       colors: { 
-        primary: '#0f172a', 
-        secondary: '#1e293b', 
-        accent: '#0284c7', 
-        danger: '#b91c1c', 
-        warning: '#d97706', 
-        success: '#15803d' 
+        primary: 'var(--color-primary)', 
+        secondary: 'var(--color-secondary)', 
+        accent: 'var(--color-accent)', 
+        danger: 'var(--color-danger)', 
+        'danger-light': 'var(--color-danger-light)',
+        warning: 'var(--color-warning)', 
+        'warning-light': 'var(--color-warning-light)',
+        success: 'var(--color-success)',
+        'success-light': 'var(--color-success-light)',
+        info: 'var(--color-info)',
+        'info-light': 'var(--color-info-light)',
+        card: 'var(--bg-card)',
+        heading: 'var(--text-heading)',
+        muted: 'var(--text-muted)',
+        'border-color': 'var(--border-color)'
       }
     },
   },

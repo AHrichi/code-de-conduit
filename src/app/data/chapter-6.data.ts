@@ -62,12 +62,12 @@ export const CHAPTER_6_DATA: Chapter = {
         },
         {
           id: 'ch6-r7',
-          title: 'المسافات الإجبارية للمنع',
-          description: 'يُمنع الوقوف والتوقف قبل هذه الأماكن بالمسافات التالية:',
-          list: [
-            'المنعرجات والمرتفعات: 30م (داخل العمران) و 50م (خارج العمران).',
-            'تقاطع سكة حديدية: 10م (داخل العمران) و 30م (خارج العمران).',
-            'مفترق طرقات: 3م (داخل العمران) و 10م (خارج العمران).'
+          title: 'المسافات الإجبارية (يُمنع الوقوف والتوقف قبلها بـ)',
+          description: '',
+          distancesTable: [
+            { location: 'منعرجات ومرتفعات', insideUrban: '30 م', outsideUrban: '50 م' },
+            { location: 'تقاطع سكة حديدية', insideUrban: '10 م', outsideUrban: '30 م' },
+            { location: 'مفترق طرقات', insideUrban: '3 م', outsideUrban: '10 م' }
           ],
           alertType: 'danger',
           imageOrSvg: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="45" width="80" height="10" fill="#e2e8f0"/><rect x="10" y="45" width="2" height="10" fill="#475569"/><rect x="90" y="45" width="2" height="10" fill="#475569"/><text x="50" y="40" font-size="12" fill="#ef4444" font-weight="bold" text-anchor="middle">DISTANCE</text><path d="M 15 50 L 85 50" stroke="#ef4444" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/></svg>`

@@ -2,12 +2,13 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { AppStore } from '../../../../store/app.store';
 import { RuleCardComponent } from '../../../../components/rule-card/rule-card.component';
 import { CHAPTER_8_DATA } from '../../../../data/chapter-8.data';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-chapter8',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RuleCardComponent],
+  imports: [RuleCardComponent, RouterLink],
   templateUrl: './chapter8.component.html',
   styleUrl: './chapter8.component.scss'
 })

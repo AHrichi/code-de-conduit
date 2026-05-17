@@ -44,6 +44,13 @@ export interface RuleItem {
   signLabel?: string;
   metaData?: any;
   list?: string[];
+  
+  // Specific data for distance tables
+  distancesTable?: {
+    location: string;
+    insideUrban: string;
+    outsideUrban: string;
+  }[];
 }
 
 export interface QuizQuestion {
@@ -63,12 +70,16 @@ export interface PastScore {
 
 export interface AppState {
   theme: 'light' | 'dark';
+  readingMode: boolean;
   pastScores: PastScore[];
+  mistakes: string[];
   studyState: {
     hideInformation: boolean;
   };
   testState: {
     activeTest: boolean;
+    mode: 'standard' | 'exam' | 'survival';
+    timeRemaining: number | null;
     currentQuestionIndex: number;
     score: number;
     answers: Record<string, number>;

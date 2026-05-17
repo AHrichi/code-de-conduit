@@ -1,0 +1,74 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="mb-8">
+    <h1 class="text-3xl font-black text-heading flex items-center gap-3">
+      <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+      بنك الأخطاء
+    </h1>
+    <p class="text-muted mt-2 font-medium">
+      هنا تجد جميع الأسئلة التي أخطأت في إجابتها. راجعها جيداً لتجنب تكرار الخطأ!
+    </p>
+  </div>
+
+  @if (mistakeQuestions().length === 0) {
+    <div class="glass-panel p-10 text-center rounded-2xl flex flex-col items-center justify-center border-dashed border-2 border-slate-500/20">
+      <div class="w-20 h-20 bg-success-light text-success rounded-full flex items-center justify-center text-3xl mb-4">
+        <i class="fa-solid fa-check-double"></i>
+      </div>
+      <h2 class="text-xl font-black text-heading mb-2">ممتاز! لا توجد أخطاء</h2>
+      <p class="text-muted">لقد أجبت على جميع الأسئلة بشكل صحيح حتى الآن.</p>
+    </div>
+  } @else {
+    <div class="grid gap-6">
+      @for (q of mistakeQuestions(); track q.id) {
+        <div class="card relative overflow-hidden group">
+          <!-- Remove Button -->
+          <button (click)="removeMistake(q.id)" 
+                  class="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-500/10 text-muted hover:bg-danger-light hover:text-danger transition-colors"
+                  title="إزالة من الأخطاء">
+            <i class="fa-solid fa-times"></i>
+          </button>
+
+          <div class="flex flex-col md:flex-row gap-6">
+            @if (q.imageOrSvg) {
+              <div class="w-full md:w-1/3 rounded-xl overflow-hidden bg-slate-500/5 flex items-center justify-center p-4">
+                <img [src]="q.imageOrSvg" alt="Question Image" class="max-h-48 object-contain">
+              </div>
+            }
+            
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-heading mb-4 leading-relaxed">{{ q.question }}</h3>
+              
+              <div class="space-y-2 mb-6">
+                @for (opt of q.options; track opt; let optIdx = $index) {
+                  <div class="p-3 rounded-lg border border-border-color flex items-center gap-3"
+                       [class.bg-success-light]="optIdx === q.correctAnswerIndex"
+                       [class.border-success]="optIdx === q.correctAnswerIndex"
+                       [class.text-success]="optIdx === q.correctAnswerIndex">
+                    <div class="w-6 h-6 rounded-full flex items-center justify-center border"
+                         [class.border-success]="optIdx === q.correctAnswerIndex"
+                         [class.bg-success]="optIdx === q.correctAnswerIndex"
+                         [class.text-white]="optIdx === q.correctAnswerIndex">
+                      @if (optIdx === q.correctAnswerIndex) {
+                        <i class="fa-solid fa-check text-xs"></i>
+                      }
+                    </div>
+                    <span class="font-medium">{{ opt }}</span>
+                  </div>
+                }
+              </div>
+
+              @if (q.explanation) {
+                <div class="bg-info-light border-r-4 border-info p-4 rounded-l-xl">
+                  <h4 class="font-bold text-info mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb"></i> الشرح
+                  </h4>
+                  <p class="text-sm text-heading opacity-80">{{ q.explanation }}</p>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

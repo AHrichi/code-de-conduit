@@ -45,6 +45,13 @@
       فهرس الفصول
     </h2>
     <nav class="sidebar-nav">
+      <a routerLink="flashcards"
+         routerLinkActive="sidebar-link--active"
+         class="sidebar-link !bg-primary/10 border-r-4 border-primary !font-black !text-primary mb-4 shadow-sm hover:scale-105 transition-transform"
+         title="وضع البطاقات السريعة">
+        <i class="fa-solid fa-bolt sidebar-link-icon !text-primary"></i>
+        <span class="sidebar-link-text">البطاقات السريعة</span>
+      </a>
       @for (ch of chapters(); track ch.path) {
         <a [routerLink]="ch.path"
            routerLinkActive="sidebar-link--active"

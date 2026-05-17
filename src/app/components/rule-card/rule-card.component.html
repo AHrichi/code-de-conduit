@@ -96,8 +96,30 @@
           </table>
         </div>
       }
-    </div>
 
+      @if (data().distancesTable) {
+        <div class="overflow-hidden rounded-xl mt-6 border-2 border-danger/30 shadow-sm max-w-3xl">
+          <table class="w-full text-center border-collapse">
+            <thead>
+              <tr class="bg-red-50 text-danger border-b border-danger/20">
+                <th class="p-4 font-black text-lg border-l border-danger/20">خارج العمران</th>
+                <th class="p-4 font-black text-lg border-l border-danger/20">داخل العمران</th>
+                <th class="p-4 font-black text-lg">المكان</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (dist of data().distancesTable; track dist.location) {
+                <tr class="border-b border-danger/10 hover:bg-slate-50 transition-colors bg-white">
+                  <td class="p-4 font-black text-slate-800 text-xl border-l border-danger/10">{{ dist.outsideUrban }}</td>
+                  <td class="p-4 font-black text-slate-800 text-xl border-l border-danger/10">{{ dist.insideUrban }}</td>
+                  <td class="p-4 font-bold text-slate-700 text-lg">{{ dist.location }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
     @if (hideInformation() && !isRevealed()) {
       <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-10">
          <div class="glass-panel px-8 py-4 rounded-2xl border-2 border-primary shadow-2xl transform -rotate-2">

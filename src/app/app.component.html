@@ -23,14 +23,40 @@
         <i class="fa-solid fa-book-open"></i> موسوعة الدراسة
       </a>
 
+      <a routerLink="/study/mistakes" routerLinkActive="!text-danger !bg-danger/10"
+         class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all duration-300 hover:bg-danger-light text-muted hover:text-danger">
+        <i class="fa-solid fa-triangle-exclamation"></i> بنك الأخطاء
+      </a>
+
       <a routerLink="/quiz" routerLinkActive="!text-primary !bg-primary/5"
          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all duration-300 hover:bg-slate-500/10 text-muted hover:text-heading">
         <i class="fa-solid fa-graduation-cap"></i> اختبار تجريبي
       </a>
+      
+      <div class="mr-4 ml-4">
+        <app-global-search></app-global-search>
+      </div>
     </div>
 
     <!-- Action Buttons -->
     <div class="flex items-center gap-4">
+      <!-- Pomodoro Timer -->
+      <app-pomodoro-timer class="hidden md:block"></app-pomodoro-timer>
+      
+      <!-- Streak Counter -->
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 font-black text-sm" title="أيام الدراسة المتتالية">
+        <i class="fa-solid fa-fire text-orange-500"></i>
+        <span>{{ progressStore.dailyStreak() }}</span>
+      </div>
+
+      <!-- Reading Mode Toggle -->
+      <button (click)="store.toggleReadingMode()"
+              class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 bg-slate-500/10 text-muted hover:bg-slate-500/20 hover:text-heading"
+              [ngClass]="{'!bg-amber-500/20 !text-amber-600': store.readingMode()}"
+              title="وضع القراءة المريحة للعين">
+        <i class="fa-solid fa-book-open-reader"></i>
+      </button>
+
       <!-- Theme Toggle -->
       <button (click)="store.toggleTheme()"
               class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 hover:rotate-45 bg-slate-500/10 text-muted hover:bg-slate-500/20 hover:text-heading"

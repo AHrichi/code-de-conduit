@@ -8,8 +8,17 @@
   </div>
   
   @if (store.testState.activeTest()) {
-    <div class="bg-warning text-white px-4 py-2 rounded-full font-bold shadow-md animate-pulse flex items-center gap-2">
-      <i class="fa-solid fa-stopwatch"></i> الاختبار قيد الإنجاز
+    <div class="flex items-center gap-4">
+      @if (store.testState.timeRemaining() !== null) {
+        <div class="bg-danger text-white px-4 py-2 rounded-full font-bold shadow-md flex items-center gap-2 text-xl tracking-widest font-mono"
+             [class.animate-pulse]="store.testState.timeRemaining()! < 10">
+          <i class="fa-solid fa-hourglass-half"></i> 
+          {{ formatTime(store.testState.timeRemaining()!) }}
+        </div>
+      }
+      <div class="bg-warning text-white px-4 py-2 rounded-full font-bold shadow-md animate-pulse flex items-center gap-2">
+        <i class="fa-solid fa-stopwatch"></i> الاختبار قيد الإنجاز
+      </div>
     </div>
   }
 </div>
@@ -24,9 +33,28 @@
         هذا الاختبار يتضمن {{ questions.length }} أسئلة من الفصول المتنوعة للقواعد العامة. 
         يجب الإجابة على جميع الأسئلة لمعرفة النتيجة.
       </p>
-      <button (click)="startTest()" class="bg-warning hover:bg-orange-600 text-white font-black text-xl py-4 px-10 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-3 mx-auto">
-        <i class="fa-solid fa-play"></i> انطلاق الاختبار
-      </button>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mt-8">
+        <!-- Standard Mode -->
+        <button (click)="startTest('standard')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 border-2 border-slate-300 font-black p-6 rounded-2xl shadow-sm transition-all hover:scale-105 active:scale-95 flex flex-col items-center gap-3">
+          <i class="fa-solid fa-book-open text-3xl text-slate-500"></i>
+          <span>الوضع العادي</span>
+          <span class="text-xs text-slate-500 font-normal">بدون وقت محدد</span>
+        </button>
+
+        <!-- Exam Mode -->
+        <button (click)="startTest('exam')" class="bg-primary hover:bg-slate-800 text-white font-black p-6 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 flex flex-col items-center gap-3">
+          <i class="fa-solid fa-file-contract text-3xl"></i>
+          <span>وضع الامتحان</span>
+          <span class="text-xs text-slate-300 font-normal">20 ثانية لكل سؤال</span>
+        </button>
+
+        <!-- Survival Mode -->
+        <button (click)="startTest('survival')" class="bg-gradient-to-br from-orange-500 to-danger text-white font-black p-6 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 flex flex-col items-center gap-3 relative overflow-hidden group">
+          <i class="fa-solid fa-fire-flame-curved text-3xl group-hover:animate-bounce"></i>
+          <span>البقاء للأقوى</span>
+          <span class="text-xs text-orange-200 font-normal">الوقت ينقص ويزيد</span>
+        </button>
+      </div>
     </div>
 
     @if (store.pastScores().length > 0) {

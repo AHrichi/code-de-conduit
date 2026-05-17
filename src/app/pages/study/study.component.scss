@@ -83,11 +83,11 @@
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s;
-  background: #e2e8f0;
-  color: #334155;
+  background: var(--bg-card);
+  color: var(--text-base);
 
   &:hover {
-    background: #cbd5e1;
+    background: var(--border-color);
   }
 
   &.btn-hide--active {
@@ -182,8 +182,8 @@
   transition: all 0.2s;
 
   &:hover {
-    background: #e2e8f0;
-    color: vars.$color-primary;
+    background: var(--border-color);
+    color: var(--color-primary);
   }
 
   &.sidebar-link--active {

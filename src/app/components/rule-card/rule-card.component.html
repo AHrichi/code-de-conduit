@@ -21,13 +21,13 @@
   <!-- Image/Icon Container (Right side on Desktop) -->
   <div class="shrink-0 flex items-center justify-center md:order-last">
     @if (data().icon && !data().imageOrSvg) {
-      <div class="text-5xl md:text-6xl p-4" [ngClass]="iconClass()">
+      <div class="text-5xl lg:text-6xl p-4" [ngClass]="iconClass()">
         <i class="fa-solid" [ngClass]="data().icon"></i>
       </div>
     }
 
     @if (data().imageOrSvg) {
-      <div class="relative h-32 w-32 md:h-40 md:w-40 drop-shadow-md flex items-center justify-center bg-white rounded-xl p-3 border border-color">
+      <div class="relative h-32 w-32 lg:h-40 lg:w-40 drop-shadow-md flex items-center justify-center bg-white rounded-xl p-3 border border-color">
         @if (isSvg()) {
           <div [innerHTML]="safeSvgUrl()" class="w-full h-full flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"></div>
         } @else {

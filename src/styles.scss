@@ -77,13 +77,13 @@
   .chapter-title {
       color: var(--color-primary);
       border-bottom-color: var(--color-accent);
-      @apply border-b-4 pb-2 mb-6 mt-10 flex items-center gap-3 font-black text-3xl;
+      @apply border-b-4 pb-2 mb-6 mt-10 flex items-center gap-3 font-black text-2xl md:text-3xl;
   }
   .card { 
       background-color: var(--bg-card);
       border-color: var(--border-color);
       box-shadow: var(--shadow-sm);
-      @apply p-6 rounded-xl border mb-6 transition-all duration-300; 
+      @apply p-4 md:p-6 rounded-xl border mb-6 transition-all duration-300; 
       
       &:hover {
         box-shadow: var(--shadow-md);

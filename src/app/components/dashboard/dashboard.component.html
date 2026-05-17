@@ -5,19 +5,19 @@
       <h1 class="text-4xl font-black text-heading mb-2">لوحة القيادة</h1>
       <p class="text-muted font-bold text-lg">تتبع تقدمك في تعلم قواعد الجولان</p>
     </div>
-    <div class="flex gap-4">
-      <a routerLink="/report" class="px-8 py-4 bg-card text-primary border-2 border-primary rounded-2xl font-black text-lg shadow-sm hover:shadow-primary/10 hover:bg-slate-500/5 hover:scale-[1.02] transition-all duration-300">
+    <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+      <a routerLink="/report" class="text-center px-8 py-4 bg-card text-primary border-2 border-primary rounded-2xl font-black text-lg shadow-sm hover:shadow-primary/10 hover:bg-slate-500/5 hover:scale-[1.02] transition-all duration-300">
         <i class="fa-solid fa-file-pdf ml-2"></i>
         تقرير شامل
       </a>
-      <a routerLink="/quiz" class="px-8 py-4 bg-primary text-white rounded-2xl font-black text-lg shadow-lg hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300">
+      <a routerLink="/quiz" class="text-center px-8 py-4 bg-primary text-white rounded-2xl font-black text-lg shadow-lg hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300">
         ابدأ اختباراً جديداً
       </a>
     </div>
   </header>
 
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="card p-8 !rounded-[2rem] flex flex-col items-center text-center group hover:!border-primary">
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="card p-5 md:p-8 !rounded-[2rem] flex flex-col items-center text-center group hover:!border-primary">
       <div class="relative w-32 h-32 mb-6">
         <svg class="w-full h-full -rotate-90">
           <circle cx="64" cy="64" r="58" fill="transparent" stroke="var(--border-color)" stroke-width="12"></circle>
@@ -34,7 +34,7 @@
       <p class="text-muted font-bold text-sm uppercase tracking-widest">حفظ القواعد</p>
     </div>
 
-    <div class="card p-8 !rounded-[2rem] flex flex-col items-center text-center group hover:!border-success">
+    <div class="card p-5 md:p-8 !rounded-[2rem] flex flex-col items-center text-center group hover:!border-success">
       <div class="w-20 h-20 bg-success-light rounded-full flex items-center justify-center mb-6 border-2 border-success/20">
         <i class="fa-solid fa-chart-line text-3xl text-success"></i>
       </div>
@@ -43,7 +43,7 @@
       <p class="text-muted font-bold text-sm uppercase tracking-widest">في الاختبارات</p>
     </div>
 
-    <div class="card p-8 !rounded-[2rem] flex flex-col items-center text-center group hover:!border-warning">
+    <div class="card p-5 md:p-8 !rounded-[2rem] flex flex-col items-center text-center group hover:!border-warning">
       <div class="w-20 h-20 bg-warning-light rounded-full flex items-center justify-center mb-6 border-2 border-warning/20">
         <i class="fa-solid fa-file-signature text-3xl text-warning"></i>
       </div>
@@ -59,7 +59,7 @@
       <h2 class="text-2xl font-black text-heading">تقدم الفصول</h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       @for (stat of chapterStats(); track stat.id) {
         <div class="card p-6 !rounded-2xl hover:shadow-md">
           <div class="flex justify-between items-center mb-4">
@@ -115,22 +115,22 @@
           <tbody>
             @for (test of recentTests(); track test.id) {
               <tr class="group hover:bg-white/5 transition-colors duration-300">
-                <td class="py-6 pr-6 bg-white/5 rounded-r-2xl">
-                  <div class="font-black text-lg">{{ test.testName }}</div>
+                <td class="py-4 pr-4 md:py-6 md:pr-6 bg-white/5 rounded-r-2xl">
+                  <div class="font-black text-base md:text-lg">{{ test.testName }}</div>
                   <div class="text-xs text-slate-500 font-bold">رقم التعريف: {{ test.id }}</div>
                 </td>
-                <td class="py-6 text-center font-bold text-slate-400 bg-white/5">
+                <td class="py-4 md:py-6 text-center font-bold text-slate-400 bg-white/5 text-xs md:text-base">
                   {{ test.dateTaken | date:'yyyy/MM/dd HH:mm' }}
                 </td>
-                <td class="py-6 text-center bg-white/5">
-                  <span class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 font-black text-xl">
+                <td class="py-4 md:py-6 text-center bg-white/5">
+                  <span class="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 font-black text-lg md:text-xl">
                     {{ test.score }}
                   </span>
-                  <span class="text-slate-500 mx-2">/</span>
+                  <span class="text-slate-500 mx-1 md:mx-2">/</span>
                   <span class="text-slate-500 font-bold">{{ test.totalQuestions }}</span>
                 </td>
-                <td class="py-6 text-left pl-6 bg-white/5 rounded-l-2xl">
-                  <span class="px-4 py-2 rounded-full font-black text-sm"
+                <td class="py-4 pl-4 md:py-6 md:pl-6 text-left bg-white/5 rounded-l-2xl">
+                  <span class="px-3 md:px-4 py-2 rounded-full font-black text-xs md:text-sm"
                         [class.bg-success]="(test.score / test.totalQuestions) >= 0.8"
                         [class.bg-warning]="(test.score / test.totalQuestions) < 0.8">
                     {{ (test.score / test.totalQuestions) | percent:'1.0-0' }}

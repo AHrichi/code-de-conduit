@@ -24,6 +24,7 @@ export const routes: Routes = [
   { path: 'test', loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent) },
   { path: 'test/:id', loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent) },
   { path: 'report', loadComponent: () => import('./pages/report/report.component').then(m => m.ReportComponent) },
+  { path: 'videos', loadComponent: () => import('./pages/videos/videos.component').then(m => m.VideosComponent) },
   { path: 'dashboard', loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent) },
   { path: 'quiz', loadComponent: () => import('./components/quiz/quiz.component').then(m => m.QuizComponent) },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

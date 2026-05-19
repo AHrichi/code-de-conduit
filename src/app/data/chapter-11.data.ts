@@ -239,45 +239,143 @@ export const CHAPTER_11_DATA: Chapter = {
       type: 'signs-grid',
       items: [
         {
-          id: 'adr-1',
-          title: 'مواد متفجرة (الصنف 1)',
-          description: 'لون برتقالي - خطر الانفجار.',
-          imageOrSvg: `<svg viewBox="0 0 100 100" class="w-16 h-16 shrink-0"><polygon points="50,5 95,50 50,95 5,50" fill="#f97316" stroke="black" stroke-width="2"></polygon><circle cx="50" cy="45" r="10" fill="black"></circle><path d="M 50 35 L 50 25 M 60 45 L 70 45 M 40 45 L 30 45 M 57 38 L 65 30 M 43 38 L 35 30 M 57 52 L 65 60 M 43 52 L 35 60" stroke="black" stroke-width="3"></path><text x="50" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="black" text-anchor="middle">1</text></svg>`,
+          id: 'adr-1-1',
+          title: 'الرتبة 1 - الفئة 1.1: خطر الانفجار الشامل',
+          description: 'المتفجرات - خطر الانفجار الشامل. مثال: مواد التدمير.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL1.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-1-2',
+          title: 'الرتبة 1 - الفئة 1.2: مخاطر الإسقاط',
+          description: 'المتفجرات - مخاطر الإسقاط ولكن ليس خطر الانفجار الشامل. مثال: الألعاب النارية.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL1.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-1-3',
+          title: 'الرتبة 1 - الفئة 1.3: خطر الحريق',
+          description: 'المتفجرات - خطر الحريق أو خطر التعرّض لعصف انفجار طفيف أو مخاطر إسقاطية طفيفة أو كليهما، ولكن ليس خطر انفجار شامل. مثال: المشاعل.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL1.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-1-4',
+          title: 'الرتبة 1 - الفئة 1.4: لا خطر كبير',
+          description: 'المتفجرات - لا يوجد خطر كبير للتعرّض لعصف انفجار. مثال: أجهزة السلامة.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL2.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-1-5',
+          title: 'الرتبة 1 - الفئة 1.5: متفجرات غير حساسة',
+          description: 'المتفجرات غير الحساسة مع خطر الانفجار الشامل. مثال: العامل المتفجّر.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL3.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-1-6',
+          title: 'الرتبة 1 - الفئة 1.6: مواد قليلة الحساسية للغاية',
+          description: 'المواد قليلة الحساسية للغاية والتي لا تنطوي على خطر انفجار شامل. مثال: المادة المتفجرة قليلة الحساسية للغاية.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL4.jpg',
           signCategory: 'danger'
         },
         {
           id: 'adr-2-1',
-          title: 'غاز قابل للاشتعال (2.1)',
-          description: 'لون أحمر - لهب أبيض.',
-          imageOrSvg: `<svg viewBox="0 0 100 100" class="w-16 h-16 shrink-0"><polygon points="50,5 95,50 50,95 5,50" fill="#ef4444" stroke="black" stroke-width="2"></polygon><path d="M 50 20 Q 55 35 50 45 Q 60 50 50 65 Q 40 50 50 45 Q 45 35 50 20" fill="white"></path><text x="50" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="white" text-anchor="middle">2</text></svg>`,
+          title: 'الرتبة 2 - الفئة 2.1: الغازات القابلة للاشتعال',
+          description: 'الغازات القابلة للاشتعال. مثال: البوتان والبروبان.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL5.jpg',
           signCategory: 'danger'
         },
         {
           id: 'adr-2-2',
-          title: 'غاز غير مشتعل (2.2)',
-          description: 'لون أخضر - غاز مضغوط.',
-          imageOrSvg: `<svg viewBox="0 0 100 100" class="w-16 h-16 shrink-0"><polygon points="50,5 95,50 50,95 5,50" fill="#22c55e" stroke="black" stroke-width="2"></polygon><rect x="40" y="25" width="20" height="40" rx="10" fill="white"></rect><text x="50" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="white" text-anchor="middle">2</text></svg>`,
+          title: 'الرتبة 2 - الفئة 2.2: غازات غير قابلة للاشتعال',
+          description: 'الغازات غير القابلة للاشتعال وغير السامة. مثال: الأرغون والأكسجين.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL6.jpg',
           signCategory: 'danger'
         },
         {
           id: 'adr-2-3',
-          title: 'غاز سام (2.3)',
-          description: 'خطر التسمم - جمجمة.',
-          imageOrSvg: `<svg viewBox="0 0 100 100" class="w-16 h-16 shrink-0"><polygon points="50,5 95,50 50,95 5,50" fill="white" stroke="black" stroke-width="2"></polygon><circle cx="50" cy="35" r="8" fill="black"></circle><rect x="47" y="43" width="6" height="6" fill="black"></rect><line x1="38" y1="55" x2="62" y2="65" stroke="black" stroke-width="4"></line><line x1="38" y1="65" x2="62" y2="55" stroke="black" stroke-width="4"></line><text x="50" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="black" text-anchor="middle">2</text></svg>`,
+          title: 'الرتبة 2 - الفئة 2.3: الغازات السامة',
+          description: 'الغازات السامة. مثال: غاز المبيدات الحشرية ومبيدات الآفات.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL7.jpg',
           signCategory: 'danger'
         },
         {
           id: 'adr-3',
-          title: 'سائل مشتعل (الصنف 3)',
-          description: 'كالوقود والمحروقات.',
-          imageOrSvg: `<svg viewBox="0 0 100 100" class="w-16 h-16 shrink-0"><polygon points="50,5 95,50 50,95 5,50" fill="#ef4444" stroke="black" stroke-width="2"></polygon><path d="M 50 20 Q 55 35 50 45 Q 60 50 50 65 Q 40 50 50 45 Q 45 35 50 20" fill="black"></path><text x="50" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="white" text-anchor="middle">3</text></svg>`,
+          title: 'الرتبة 3: السوائل القابلة للاشتعال',
+          description: 'السوائل القابلة للاشتعال. مثال: الديزل والكحول.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL8.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-4-1',
+          title: 'الرتبة 4 - الفئة 4.1: مواد صلبة قابلة للاشتعال',
+          description: 'المواد الصلبة القابلة للاشتعال، والمواد ذاتية التفاعل والمتفجرات الصلبة منزوعة الحساسية. مثال: أعواد الثقاب من الكبريت.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL9.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-4-2',
+          title: 'الرتبة 4 - الفئة 4.2: مواد عُرضة للاحتراق الذاتي',
+          description: 'المواد العُرضة للاحتراق الذاتي. مثال: الفسفور الأبيض أو الأصفر.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL10.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-4-3',
+          title: 'الرتبة 4 - الفئة 4.3: مواد تتفاعل مع الماء',
+          description: 'المواد التي تنبعث منها غازات قابلة للاشتعال عند تلامسها مع الماء. مثال: الليثيوم.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL11.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-5-1',
+          title: 'الرتبة 5 - الفئة 5.1: المواد المؤكسِدة',
+          description: 'المواد المؤكسِدة. مثال: كلورات الكالسيوم، ومولد الأكسجين.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL12.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-5-2',
+          title: 'الرتبة 5 - الفئة 5.2: الأكاسيد فوق العضوية',
+          description: 'الأكاسيد فوق العضوية. مثال: بيروكسيد الهيدروجين.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL13.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-6-1',
+          title: 'الرتبة 6 - الفئة 6.1: المواد السامة',
+          description: 'المواد السامة. مثال: مبيدات الآفات.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL14.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-6-2',
+          title: 'الرتبة 6 - الفئة 6.2: المواد المُعدية',
+          description: 'المواد المُعدية. مثال: عينات المرضى.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL15.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-7',
+          title: 'الرتبة 7: المواد المشعة',
+          description: 'المواد المشعة. مثال: مكونات الآلة، والنظائر المشعة للتشخيص أو العلاج.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL16.jpg',
           signCategory: 'danger'
         },
         {
           id: 'adr-8',
-          title: 'مواد أكالة (Corrosive)',
-          description: 'نصف أبيض / نصف أسود.',
-          imageOrSvg: `<svg viewBox="0 0 100 100" class="w-16 h-16 shrink-0"><polygon points="50,5 95,50 5,50" fill="white" stroke="black" stroke-width="2"></polygon><polygon points="5,50 95,50 50,95" fill="black" stroke="black" stroke-width="2"></polygon><rect x="42" y="25" width="6" height="18" fill="black" transform="rotate(-30 42 25)"></rect><rect x="52" y="25" width="6" height="18" fill="black" transform="rotate(30 52 25)"></rect><path d="M 30 45 L 70 45" stroke="white" stroke-width="3"></path><text x="50" y="85" font-family="Arial" font-size="16" font-weight="bold" fill="white" text-anchor="middle">8</text></svg>`,
+          title: 'الرتبة 8: المواد المُسببة للتآكل',
+          description: 'المواد المُسببة للتآكل. مثال: الأحماض.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL19.jpg',
+          signCategory: 'danger'
+        },
+        {
+          id: 'adr-9',
+          title: 'الرتبة 9: المواد الخطرة المتنوعة',
+          description: 'المواد الخطرة المتنوعة. مثال: حقيبة الإسعافات الأولية، بطاريات الليثيوم.',
+          imageOrSvg: 'https://log.logcluster.org/sites/default/files/2022-05/DGL20.jpg',
           signCategory: 'danger'
         }
       ]

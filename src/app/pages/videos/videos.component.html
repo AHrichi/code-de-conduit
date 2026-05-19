@@ -1,0 +1,420 @@
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TEST MODE — Full-screen focused exam/correction view -->
+<!-- ══════════════════════════════════════════════════════ -->
+@if (testModeVideo(); as tmVideo) {
+  <div class="test-mode" dir="rtl">
+    <!-- Top bar -->
+    <div class="test-mode-bar">
+      <div class="test-mode-title">
+        <i class="fa-solid" [class]="tmVideo.category === 'exam' ? 'fa-file-circle-question' : 'fa-clipboard-check'"></i>
+        <span>{{ tmVideo.title }}</span>
+      </div>
+      <div class="test-mode-actions">
+        @if (tmVideo.category === 'exam' && tmVideo.examNumber) {
+          <span class="answer-counter">{{ getAnsweredCount(tmVideo.examNumber) }} / 30</span>
+        }
+        @if (tmVideo.category === 'correction' && tmVideo.correctionFor) {
+          <span class="score-badge score-badge--correct">
+            <i class="fa-solid fa-check"></i> {{ getCorrectCount(tmVideo.correctionFor) }}
+          </span>
+          <span class="score-badge score-badge--wrong">
+            <i class="fa-solid fa-xmark"></i> {{ getWrongCount(tmVideo.correctionFor) }}
+          </span>
+        }
+        <button class="exit-test-btn" (click)="exitTestMode()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
+        </button>
+      </div>
+    </div>
+
+    <!-- Split layout: video + answer sheet -->
+    <div class="test-mode-body">
+      <!-- Video panel -->
+      <div class="test-mode-video">
+        <iframe
+          [src]="getEmbedUrl(tmVideo.youtubeId)"
+          [title]="tmVideo.title"
+          class="test-mode-iframe"
+          frameborder="0"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Answer sheet panel -->
+      <div class="test-mode-sheet">
+        <!-- EXAM mode: editable answer sheet -->
+        @if (tmVideo.category === 'exam' && tmVideo.examNumber) {
+          <div class="sheet-header">
+            <span class="sheet-label"><i class="fa-solid fa-pen-to-square"></i> ورقة الإجابة</span>
+            @if (hasAnswers(tmVideo.examNumber)) {
+              <button class="clear-btn" (click)="clearAnswers(tmVideo.examNumber)">
+                <i class="fa-solid fa-eraser"></i> مسح
+              </button>
+            }
+          </div>
+          <div class="sheet-grid">
+            @for (q of questionNumbers; track q) {
+              <div class="sheet-row">
+                <span class="q-number">{{ q }}</span>
+                <div class="q-options">
+                  @for (opt of answerOptions; track opt) {
+                    <button
+                      class="q-btn"
+                      [class.q-btn--a]="opt === 'أ'"
+                      [class.q-btn--b]="opt === 'ب'"
+                      [class.q-btn--c]="opt === 'ج'"
+                      [class.q-btn--selected]="getAnswer(tmVideo.examNumber!, q) === opt"
+                      (click)="selectAnswer(tmVideo.examNumber!, q, opt)">
+                      {{ opt }}
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- CORRECTION mode: review + mark correct/wrong -->
+        @if (tmVideo.category === 'correction' && tmVideo.correctionFor) {
+          <div class="sheet-header">
+            <span class="sheet-label"><i class="fa-solid fa-clipboard-check"></i> إجاباتك — امتحان {{ tmVideo.correctionFor }}</span>
+            <span class="sheet-score" [class.sheet-score--good]="getCorrectCount(tmVideo.correctionFor) >= 24">
+              {{ getScoreText(tmVideo.correctionFor) }}
+            </span>
+          </div>
+          <div class="sheet-grid">
+            @for (q of questionNumbers; track q) {
+              <div class="sheet-row"
+                   [class.sheet-row--correct]="getMark(tmVideo.correctionFor!, q) === 'correct'"
+                   [class.sheet-row--wrong]="getMark(tmVideo.correctionFor!, q) === 'wrong'">
+                <span class="q-number">{{ q }}</span>
+                <div class="q-options">
+                  @for (opt of answerOptions; track opt) {
+                    <span
+                      class="q-btn q-btn--readonly"
+                      [class.q-btn--a]="opt === 'أ'"
+                      [class.q-btn--b]="opt === 'ب'"
+                      [class.q-btn--c]="opt === 'ج'"
+                      [class.q-btn--selected]="getAnswer(tmVideo.correctionFor!, q) === opt">
+                      {{ opt }}
+                    </span>
+                  }
+                </div>
+                <!-- Correct / Wrong toggle buttons -->
+                <div class="mark-btns">
+                  <button class="mark-btn mark-btn--correct"
+                          [class.mark-btn--active]="getMark(tmVideo.correctionFor!, q) === 'correct'"
+                          (click)="toggleMark(tmVideo.correctionFor!, q, 'correct')"
+                          title="صحيح">
+                    <i class="fa-solid fa-check"></i>
+                  </button>
+                  <button class="mark-btn mark-btn--wrong"
+                          [class.mark-btn--active]="getMark(tmVideo.correctionFor!, q) === 'wrong'"
+                          (click)="toggleMark(tmVideo.correctionFor!, q, 'wrong')"
+                          title="خطأ">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- NORMAL MODE — video library                           -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="videos-container max-w-6xl mx-auto p-4 md:p-10 space-y-10" dir="rtl">
+
+  <!-- Header -->
+  <header class="videos-header">
+    <div class="header-content">
+      <div class="header-icon-wrapper">
+        <i class="fa-solid fa-play text-white text-2xl"></i>
+      </div>
+      <div>
+        <h1 class="text-3xl md:text-4xl font-black text-heading mb-1">مكتبة الفيديوهات</h1>
+        <p class="text-muted font-bold text-base md:text-lg">امتحانات تجريبية مصوّرة مع الإصلاح التفصيلي — EllCOACH</p>
+      </div>
+    </div>
+    <div class="progress-badge">
+      <div class="progress-ring">
+        <svg viewBox="0 0 36 36" class="progress-ring-svg">
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border-color)" stroke-width="3"></circle>
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--color-success)" stroke-width="3"
+                  stroke-linecap="round"
+                  [attr.stroke-dasharray]="100"
+                  [attr.stroke-dashoffset]="100 - progressPercent()"
+                  class="progress-ring-fill"></circle>
+        </svg>
+        <span class="progress-ring-text">{{ progressPercent() }}%</span>
+      </div>
+      <div class="progress-info">
+        <span class="font-black text-heading text-sm">{{ totalWatched() }} / {{ totalVideos() }}</span>
+        <span class="text-muted font-bold text-xs">تمت المشاهدة</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav class="tabs-nav" role="tablist" aria-label="تصنيفات الفيديو">
+    @for (tab of tabs(); track tab.key) {
+      <button
+        class="tab-btn"
+        [class.tab-btn--active]="activeTab() === tab.key"
+        (click)="setActiveTab(tab.key)"
+        role="tab"
+        [attr.aria-selected]="activeTab() === tab.key"
+        [attr.id]="'tab-' + tab.key">
+        <i class="fa-solid" [class]="tab.icon"></i>
+        <span class="tab-label">{{ tab.label }}</span>
+        <span class="tab-count">{{ tab.watched }}/{{ tab.count }}</span>
+      </button>
+    }
+  </nav>
+
+  <!-- Video Grid -->
+  <section class="video-grid" role="tabpanel" [attr.aria-labelledby]="'tab-' + activeTab()">
+    @for (video of filteredVideos(); track video.id) {
+      <article class="video-card"
+               [class.video-card--playing]="isPlaying(video.id)"
+               [class.video-card--watched]="isWatched(video.id)">
+
+        <!-- Thumbnail / Embed -->
+        <div class="video-media" [class.video-media--expanded]="isPlaying(video.id)">
+          @if (isPlaying(video.id)) {
+            <iframe
+              [src]="getEmbedUrl(video.youtubeId)"
+              [title]="video.title"
+              class="video-iframe"
+              frameborder="0"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          } @else {
+            <button class="thumbnail-wrapper" (click)="playVideo(video.id)" [attr.aria-label]="'تشغيل ' + video.title">
+              <img
+                [src]="getThumbnail(video.youtubeId)"
+                [alt]="video.title"
+                class="thumbnail-img"
+                loading="lazy">
+              <div class="play-overlay">
+                <div class="play-btn-circle">
+                  <i class="fa-solid fa-play text-white text-xl"></i>
+                </div>
+              </div>
+              @if (isWatched(video.id)) {
+                <span class="watched-badge-thumb">
+                  <i class="fa-solid fa-circle-check"></i>
+                </span>
+              }
+              @if (video.category === 'exam' && video.examNumber && hasAnswers(video.examNumber)) {
+                <span class="answers-badge-thumb">
+                  <i class="fa-solid fa-pen"></i> {{ getAnsweredCount(video.examNumber) }}/30
+                </span>
+              }
+            </button>
+          }
+        </div>
+
+        <!-- QCM Answer Sheet (inline, when playing exam) -->
+        @if (video.category === 'exam' && video.examNumber && isPlaying(video.id)) {
+          <div class="answer-sheet">
+            <div class="answer-sheet-header">
+              <div class="answer-sheet-title">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>ورقة الإجابة</span>
+              </div>
+              <div class="answer-sheet-stats">
+                <span class="answer-counter">{{ getAnsweredCount(video.examNumber) }} / 30</span>
+                @if (hasAnswers(video.examNumber)) {
+                  <button class="clear-btn" (click)="clearAnswers(video.examNumber)">
+                    <i class="fa-solid fa-eraser"></i> مسح
+                  </button>
+                }
+              </div>
+            </div>
+            <div class="answer-grid">
+              @for (q of questionNumbers; track q) {
+                <div class="answer-row">
+                  <span class="q-number">{{ q }}</span>
+                  <div class="q-options">
+                    @for (opt of answerOptions; track opt) {
+                      <button
+                        class="q-btn"
+                        [class.q-btn--a]="opt === 'أ'"
+                        [class.q-btn--b]="opt === 'ب'"
+                        [class.q-btn--c]="opt === 'ج'"
+                        [class.q-btn--selected]="getAnswer(video.examNumber!, q) === opt"
+                        (click)="selectAnswer(video.examNumber!, q, opt)">
+                        {{ opt }}
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- QCM Review Sheet (inline, when playing correction) -->
+        @if (video.category === 'correction' && video.correctionFor && isPlaying(video.id) && hasAnswers(video.correctionFor)) {
+          <div class="answer-sheet answer-sheet--review">
+            <div class="answer-sheet-header">
+              <div class="answer-sheet-title">
+                <i class="fa-solid fa-clipboard-check"></i>
+                <span>إجاباتك — امتحان {{ video.correctionFor }}</span>
+              </div>
+              <div class="answer-sheet-stats">
+                <span class="score-badge score-badge--correct"><i class="fa-solid fa-check"></i> {{ getCorrectCount(video.correctionFor) }}</span>
+                <span class="score-badge score-badge--wrong"><i class="fa-solid fa-xmark"></i> {{ getWrongCount(video.correctionFor) }}</span>
+              </div>
+            </div>
+            <div class="answer-grid">
+              @for (q of questionNumbers; track q) {
+                <div class="answer-row"
+                     [class.answer-row--correct]="getMark(video.correctionFor!, q) === 'correct'"
+                     [class.answer-row--wrong]="getMark(video.correctionFor!, q) === 'wrong'">
+                  <span class="q-number">{{ q }}</span>
+                  <div class="q-options">
+                    @for (opt of answerOptions; track opt) {
+                      <span
+                        class="q-btn q-btn--readonly"
+                        [class.q-btn--a]="opt === 'أ'"
+                        [class.q-btn--b]="opt === 'ب'"
+                        [class.q-btn--c]="opt === 'ج'"
+                        [class.q-btn--selected]="getAnswer(video.correctionFor!, q) === opt">
+                        {{ opt }}
+                      </span>
+                    }
+                  </div>
+                  <div class="mark-btns">
+                    <button class="mark-btn mark-btn--correct"
+                            [class.mark-btn--active]="getMark(video.correctionFor!, q) === 'correct'"
+                            (click)="toggleMark(video.correctionFor!, q, 'correct')"
+                            title="صحيح">
+                      <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="mark-btn mark-btn--wrong"
+                            [class.mark-btn--active]="getMark(video.correctionFor!, q) === 'wrong'"
+                            (click)="toggleMark(video.correctionFor!, q, 'wrong')"
+                            title="خطأ">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Card Info -->
+        <div class="video-info">
+          <div class="video-meta">
+            @switch (video.category) {
+              @case ('exam') {
+                <span class="category-tag category-tag--exam">
+                  <i class="fa-solid fa-file-circle-question"></i> امتحان {{ video.examNumber }}
+                </span>
+              }
+              @case ('correction') {
+                <span class="category-tag category-tag--correction">
+                  <i class="fa-solid fa-check-double"></i> إصلاح {{ video.correctionFor }}
+                </span>
+              }
+              @case ('lesson') {
+                <span class="category-tag category-tag--lesson">
+                  <i class="fa-solid fa-book-open"></i> درس
+                </span>
+              }
+            }
+
+            <button class="watch-toggle"
+                    [class.watch-toggle--active]="isWatched(video.id)"
+                    (click)="toggleWatched(video.id, $event)"
+                    [title]="isWatched(video.id) ? 'إلغاء التحديد' : 'تحديد كمُشاهَد'">
+              @if (isWatched(video.id)) {
+                <i class="fa-solid fa-circle-check"></i>
+              } @else {
+                <i class="fa-regular fa-circle"></i>
+              }
+            </button>
+          </div>
+
+          <h3 class="video-title">{{ video.title }}</h3>
+
+          <!-- Exam score display -->
+          @if (video.category === 'correction' && video.correctionFor && getMarkedCount(video.correctionFor) > 0) {
+            <div class="mini-score">
+              <span class="mini-score-correct">{{ getCorrectCount(video.correctionFor) }} صحيح</span>
+              <span class="mini-score-wrong">{{ getWrongCount(video.correctionFor) }} خطأ</span>
+            </div>
+          }
+
+          <!-- Links -->
+          @if (video.category === 'exam' && getCorrectionFor(video.examNumber)) {
+            <button class="link-btn" (click)="setActiveTab('correction'); playVideo(getCorrectionFor(video.examNumber)!.id)">
+              <i class="fa-solid fa-arrow-turn-down"></i> شاهد الإصلاح
+            </button>
+          }
+          @if (video.category === 'correction' && getExamFor(video.correctionFor)) {
+            <button class="link-btn" (click)="setActiveTab('exam'); playVideo(getExamFor(video.correctionFor)!.id)">
+              <i class="fa-solid fa-arrow-turn-up"></i> شاهد الامتحان
+            </button>
+          }
+
+          <div class="video-actions">
+            @if (isPlaying(video.id)) {
+              <button class="action-btn action-btn--close" (click)="playVideo(video.id)">
+                <i class="fa-solid fa-xmark"></i> إغلاق
+              </button>
+              @if (!isWatched(video.id)) {
+                <button class="action-btn action-btn--done" (click)="markAsWatched(video.id)">
+                  <i class="fa-solid fa-check"></i> أنهيته
+                </button>
+              }
+            } @else {
+              <button class="action-btn action-btn--play" (click)="playVideo(video.id)">
+                <i class="fa-solid fa-circle-play"></i> مشاهدة
+              </button>
+            }
+            <!-- Test mode button for exams and corrections -->
+            @if (video.category === 'exam' || video.category === 'correction') {
+              <button class="action-btn action-btn--test" (click)="enterTestMode(video)" title="وضع الامتحان">
+                <i class="fa-solid fa-expand"></i>
+              </button>
+            }
+            <a [href]="'https://www.youtube.com/watch?v=' + video.youtubeId"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="action-btn action-btn--external"
+               [attr.aria-label]="'فتح ' + video.title + ' على يوتيوب'">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </article>
+    }
+  </section>
+
+  <!-- Tip Banner -->
+  <div class="tip-banner">
+    <div class="tip-icon">
+      <i class="fa-solid fa-lightbulb text-2xl"></i>
+    </div>
+    <div>
+      <p class="font-black text-heading text-lg mb-1">كيف تستخدم ورقة الإجابة؟</p>
+      <p class="text-muted font-bold text-sm">
+        <strong>1.</strong> شاهد الامتحان وسجّل إجاباتك (أ/ب/ج) — أو اضغط <i class="fa-solid fa-expand"></i> لوضع الامتحان المركّز.
+        <strong>2.</strong> انتقل إلى الإصلاح لمقارنة إجاباتك، واضغط <i class="fa-solid fa-check text-green-600"></i> أو <i class="fa-solid fa-xmark text-red-600"></i> لتحديد كل إجابة.
+      </p>
+    </div>
+  </div>
+
+</div>
+}

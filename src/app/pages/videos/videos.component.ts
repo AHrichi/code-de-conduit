@@ -61,7 +61,7 @@ export class VideosComponent {
   readonly answerOptions = ANSWER_OPTIONS;
 
   readonly videos: VideoItem[] = [
-    // ── Mock Exams (17 exams) ──
+    // ── Mock Exams (22 exams) ──
     { id: 'ex-1',  title: 'امتحان 1',  youtubeId: 'cvM-JtCe5BU',  category: 'exam', examNumber: 1 },
     { id: 'ex-2',  title: 'امتحان 2',  youtubeId: 'uDsHKcdUmaU',  category: 'exam', examNumber: 2 },
     { id: 'ex-3',  title: 'امتحان 3',  youtubeId: 'D9DxISgP--s',  category: 'exam', examNumber: 3 },
@@ -79,8 +79,13 @@ export class VideosComponent {
     { id: 'ex-15', title: 'امتحان 15', youtubeId: 'nf198fmz5So',  category: 'exam', examNumber: 15 },
     { id: 'ex-16', title: 'امتحان 16', youtubeId: 'l642p6VcJGA',  category: 'exam', examNumber: 16 },
     { id: 'ex-17', title: 'امتحان 17', youtubeId: '9O61BEGB5NY',  category: 'exam', examNumber: 17 },
+    { id: 'ex-18', title: 'سلسلة 1 (قانون المرور تونس)', youtubeId: 'i8rwvK2-lu4', category: 'exam', examNumber: 18 },
+    { id: 'ex-19', title: 'سلسلة 2 (قانون المرور تونس)', youtubeId: 'k1WK2P61uNQ', category: 'exam', examNumber: 19 },
+    { id: 'ex-20', title: 'سلسلة 3 (قانون المرور تونس)', youtubeId: '2ErFi0u-Rmc', category: 'exam', examNumber: 20 },
+    { id: 'ex-21', title: 'سلسلة 4 (قانون المرور تونس)', youtubeId: 'nIuWCRDTO1o', category: 'exam', examNumber: 21 },
+    { id: 'ex-22', title: 'سلسلة 5 (قانون المرور تونس)', youtubeId: 'hGYDcQcIhC8', category: 'exam', examNumber: 22 },
 
-    // ── Exam Corrections (15 corrections) ──
+    // ── Exam Corrections (20 corrections) ──
     { id: 'cr-1',  title: 'إصلاح امتحان 1',  youtubeId: 'B-z_1L6bsS4',  category: 'correction', correctionFor: 1 },
     { id: 'cr-2',  title: 'إصلاح امتحان 2',  youtubeId: '1oabxh2Qu70',  category: 'correction', correctionFor: 2 },
     { id: 'cr-3',  title: 'إصلاح امتحان 3',  youtubeId: '6xXsoyChSww',  category: 'correction', correctionFor: 3 },
@@ -96,6 +101,11 @@ export class VideosComponent {
     { id: 'cr-13', title: 'إصلاح امتحان 13', youtubeId: 'xKBY4f7RR6E',  category: 'correction', correctionFor: 13 },
     { id: 'cr-14', title: 'إصلاح امتحان 14', youtubeId: 's3jIP1-lSKc',  category: 'correction', correctionFor: 14 },
     { id: 'cr-15', title: 'إصلاح امتحان 15', youtubeId: 'QqynO9H23N8',  category: 'correction', correctionFor: 15 },
+    { id: 'cr-16', title: 'إصلاح سلسلة 1 (قانون المرور تونس)', youtubeId: '8pNzLUepc1o', category: 'correction', correctionFor: 18 },
+    { id: 'cr-17', title: 'إصلاح سلسلة 2 (قانون المرور تونس)', youtubeId: 'habqIO7zWmw', category: 'correction', correctionFor: 19 },
+    { id: 'cr-18', title: 'إصلاح سلسلة 3 (قانون المرور تونس)', youtubeId: 'xoZ5e0RY71Y', category: 'correction', correctionFor: 20 },
+    { id: 'cr-19', title: 'إصلاح سلسلة 4 (قانون المرور تونس)', youtubeId: 'j5l8WnV1MvI', category: 'correction', correctionFor: 21 },
+    { id: 'cr-20', title: 'إصلاح سلسلة 5 (قانون المرور تونس)', youtubeId: 'oe17YiNhL2k', category: 'correction', correctionFor: 22 },
 
     // ── Lessons (3 lessons) ──
     { id: 'ls-1', title: 'درس أساسي في قانون الطريق', youtubeId: 'hTYXgul6Gps', category: 'lesson' },
